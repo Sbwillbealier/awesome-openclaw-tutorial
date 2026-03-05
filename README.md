@@ -613,10 +613,10 @@ curl -fsSL https://openclaw.ai/install.sh | bash
 
 ## 👥 交流群
 
-欢迎加入OpenClaw交流群，与更多开发者一起交流学习！
+欢迎加入OpenClaw交流群，与更多开发者一起交流学习！备注：小龙虾
 
 <div align="center">
-  <img src="https://upload.maynor1024.live/file/1770779327294_15e3f48bf5100e60b593ca76d3758089.jpg" alt="OpenClaw交流群二维码" width="300">
+  <img src="https://upload.maynor1024.live/file/1772695436136_20260305152343578.jpg" alt="OpenClaw交流群二维码" width="300">
   <p>扫码加入OpenClaw交流群</p>
 </div>
 
