@@ -59,7 +59,7 @@ OpenClaw在Mac上体验最好，因为：
 - ☁️ **无Mac/想24小时运行** → [云端一键部署](#云端一键部署) + [飞书配置](../03-advanced/09-multi-platform-integration.md#91-飞书bot配置)
 
 **所有部署方式**：
-- � [Mac本地部署（推荐）](#mac本地部署推荐)
+- 🍎 [Mac本地部署（推荐）](#mac本地部署推荐)
 - 🪟 [Windows本地部署](#windows本地部署)
 - 🐧 [Linux本地部署](#linux本地部署)
 - 🚀 [云端一键部署](#云端一键部署)

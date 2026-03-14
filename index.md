@@ -11,14 +11,13 @@ title: 首页
 [![GitHub forks](https://img.shields.io/github/forks/xianyu110/awesome-openclaw-tutorial?style=social)](https://github.com/xianyu110/awesome-openclaw-tutorial)
 [![License](https://img.shields.io/badge/license-GPL--3.0-blue.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-v2026.3.12-green.svg)](https://github.com/xianyu110/awesome-openclaw-tutorial)
-[![OpenClaw](https://img.shields.io/badge/OpenClaw-2026.3.12-orange.svg)](https://openclaw.ai)
-
+[![Status](https://img.shields.io/badge/status-完成-success.svg)](PROJECT-SUMMARY.md)
 [![CSDN](https://img.shields.io/badge/CSDN-博客-c32136?style=for-the-badge&logo=csdn)](https://blog.csdn.net/xianyu120)
 [![Bilibili](https://img.shields.io/badge/Bilibili-B站-fb7299?style=for-the-badge&logo=bilibili)](https://space.bilibili.com/399102586)
 [![微信公众号](https://img.shields.io/badge/微信公众号-MaynorAI-07C160?style=for-the-badge&logo=wechat)](https://upload.may.maynor1024.live/file/1773461955906_qrcode_for_gh_c749803541de_1280.jpg)
 [![YouTube](https://img.shields.io/badge/YouTube-Profile-red?style=for-the-badge&logo=youtube)](https://www.youtube.com/@buguniao537)
 [![X](https://img.shields.io/badge/X-Profile-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/Nikitka_aktikiN)
----
+
 
 ## 🎯 新手快速通道
 
@@ -59,7 +58,7 @@ title: 首页
 - **初始 K8s 安装路径**：包含原始清单和 Kind 设置
 - **企业级部署**：完整的 Kubernetes 部署文档
 
-#### 🔒 ��全增强（重要！）
+#### 🔒 安全增强（重要！）
 - **设备配对安全**：`/pair` 和 `openclaw qr` 使用短期引导令牌
 - **插件信任机制**：禁用隐式工作区插件自动加载，需要明确信任决定
 - **命令权限控制**：`/config` 和 `/debug` 要求发送者所有权
@@ -73,8 +72,6 @@ openclaw update && openclaw gateway restart
 👉 [查看完整发布说明](https://github.com/openclaw/openclaw/releases)
 
 ---
-
-### ⚠️ 2026.3.7 版本：Gateway认证要求（Breaking Change）
 
 ### ⚠️ 2026.3.7 版本：Gateway认证要求（Breaking Change）
 
@@ -162,40 +159,6 @@ openclaw gateway restart
 ```
 
 6. 保存配置并重启Gateway
-
----
-
-## 📖 关于本教程
-
-**OpenClaw 2026.3.7 Breaking Change**：Gateway认证现在要求显式设置 `gateway.auth.mode`。你必须明确选择 `token` 或 `password` 认证方式，不再有「无认证」的默认选项。
-
-**配置方法**：
-
-在 `~/.openclaw/openclaw.json` 中添加以下配置：
-
-```json
-{
-  "gateway": {
-    "auth": {
-      "mode": "token",  // 或 "password"
-      "token": "your-secret-token"
-    }
-  }
-}
-```
-
-**⚠️ 重要提示**：如果你从旧版本升级到 v2026.3.7 且没有配置认证，Gateway将拒绝启动。这是一个有意为之的设计，强制所有用户设置认证。
-
-**快速修复（命令行）**：
-
-```bash
-# 设置token认证
-openclaw config set gateway.auth.mode token
-openclaw config set gateway.auth.token "your-secret-token"
-
-# 重启Gateway
-openclaw gateway restart
-```
 
 ---
 

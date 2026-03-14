@@ -124,13 +124,13 @@ echo "📊 内容分析..."
 openclaw agent --message "请分析 $OUTPUT_DIR/merged-$DATE.json 中的内容并评分，保存到 $OUTPUT_DIR/analyzed-$DATE.json"
 
 # 6. 生成日报
-echo "� 生成日报..."
+echo "📊 生成日报..."
 openclaw agent --message "请根据以下信息生成今日日报，按技术、产品、行业分类，每条信息包含标题、摘要、链接和推荐理由：
 $(cat $OUTPUT_DIR/analyzed-$DATE.json)" \
   --output "$OUTPUT_DIR/digest-$DATE.md"
 
 # 7. 推送到飞书
-echo "� 推送到飞书..."
+echo "📤 推送到飞书..."
 openclaw channels send feishu \
   --message "$(cat $OUTPUT_DIR/digest-$DATE.md)" \
   --title "📰 每日资讯 $DATE"
