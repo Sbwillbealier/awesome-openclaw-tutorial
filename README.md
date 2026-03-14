@@ -32,6 +32,12 @@
 
 ## 📢 2026年3月更新（v1.6）
 
+### 🗂 更新文章索引
+
+- **2026-03-13（v2026.3.12）**：更新解读见 [updates/2026-03-13-v2026.3.12.md](updates/2026-03-13-v2026.3.12.md)
+- **2026-03-14（v2026.3.13）**：更新解读见 [updates/2026-03-14-v2026.3.13.md](updates/2026-03-14-v2026.3.13.md)
+
+
 ### 🚀 版本更新至 v2026.3.12
 
 **OpenClaw 最新版本 v2026.3.12 已发布！**（2026年3月13日）
@@ -76,6 +82,18 @@ openclaw update
 # 重启Gateway
 openclaw gateway restart
 ```
+
+### 🚀版本更新至 v2026.3.13
+
+**OpenClaw 最新版本 v2026.3.13 已发布！**（2026年3月14日）
+
+- 📱 **移动端体验升级**：Android 聊天设置页重做；iOS 首次启动引导更清晰（Connect 步骤提示 `/pair qr`）
+- 🌐 **浏览器能力增强**：支持 Chrome DevTools MCP attach（接管已登录 Chrome）；新增 `profile="user"` / `profile="chrome-relay"`；`browser.act` 支持批量 actions/selector/延迟点击
+- 🧊 **Docker 时区可控**：新增 `OPENCLAW_TZ`
+- 🐛 **关键修复**：Dashboard v2 工具结果回传卡顿、Gateway RPC pending 泄漏回收、plugin-sdk 打包内存问题、Ollama reasoning 不再泄露到最终文本
+
+>详细解读：见 [updates/2026-03-14-v2026.3.13.md](updates/2026-03-14-v2026.3.13.md)
+
 
 ### ✨ 新增附录O：国产Claw产品选购指南
 
