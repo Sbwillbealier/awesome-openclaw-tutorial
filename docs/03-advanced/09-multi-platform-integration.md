@@ -4346,3 +4346,20 @@ npm start
 **下一章预告**：第10章将学习API集成，包括如何对接各种第三方服务，实现更强大的自动化功能。
 
 **返回目录**：[README](../../README.md)
+
+
+---
+
+## 🌐 在线阅读
+
+📖 **想在线阅读此章节？**
+
+[🔗 在线阅读此章节](https://awesome.tryopenclaw.asia/docs/03-advanced/09-multi-platform-integration/)
+
+访问网站获取更好的阅读体验：
+- 📱 响应式设计，支持手机、平板、电脑
+- ���� 支持黑暗模式，保护眼睛
+- 🔍 内置搜索功能，快速定位内容
+- 📋 目录导航，轻松跳转章节
+
+[🏠 访问完整教���网站](https://awesome.tryopenclaw.asia)

@@ -3736,3 +3736,20 @@ curl -s https://api.github.com/repos/openclaw/openclaw/releases/latest
 **下一章**：[第3章：快速上手](03-quick-start.md) - 开始使用 OpenClaw
 
 **返回目录**：[README](../../README.md)
+
+
+---
+
+## 🌐 在线阅读
+
+📖 **想在线阅读此章节？**
+
+[🔗 在线阅读此章节](https://awesome.tryopenclaw.asia/docs/01-basics/02-installation/)
+
+访问网站获取更好的阅读体验：
+- 📱 响应式设计，支持手机、平板、电脑
+- ���� 支持黑暗模式，保护眼睛
+- 🔍 内置搜索功能，快速定位内容
+- 📋 目录导航，轻松跳转章节
+
+[🏠 访问完整教���网站](https://awesome.tryopenclaw.asia)

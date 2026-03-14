@@ -1106,3 +1106,20 @@ A：告诉OpenClaw"停止XX任务"即可。
 ---
 
 **下一章预告**：第8章将学习Skills扩展，包括ClawHub技能市场、必装Skills推荐、自定义Skills开发等内容。
+
+
+---
+
+## 🌐 在线阅读
+
+📖 **想在线阅读此章节？**
+
+[🔗 在线阅读此章节](https://awesome.tryopenclaw.asia/docs/02-core-features/07-automation-workflow/)
+
+访问网站获取更好的阅读体验：
+- 📱 响应式设计，支持手机、平板、电脑
+- ���� 支持黑暗模式，保护眼睛
+- 🔍 内置搜索功能，快速定位内容
+- 📋 目录导航，轻松跳转章节
+
+[🏠 访问完整教���网站](https://awesome.tryopenclaw.asia)

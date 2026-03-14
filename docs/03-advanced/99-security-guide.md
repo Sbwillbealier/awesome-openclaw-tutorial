@@ -474,3 +474,20 @@ openclaw backup restore <backup-file>
 **最后更新**：2026年3月13日
 **适用版本**：OpenClaw v2026.3.8
 **新增内容**：ClawJacked漏洞、工信部预警、npm包攻击、ACP身份验证、备份工具
+
+
+---
+
+## 🌐 在线阅读
+
+📖 **想在线阅读此章节？**
+
+[🔗 在线阅读此章节](https://awesome.tryopenclaw.asia/docs/03-advanced/99-security-guide/)
+
+访问网站获取更好的阅读体验：
+- 📱 响应式设计，支持手机、平板、电脑
+- ���� 支持黑暗模式，保护眼睛
+- 🔍 内置搜索功能，快速定位内容
+- 📋 目录导航，轻松跳转章节
+
+[🏠 访问完整教���网站](https://awesome.tryopenclaw.asia)

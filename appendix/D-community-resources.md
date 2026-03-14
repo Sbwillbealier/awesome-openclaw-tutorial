@@ -903,3 +903,20 @@ npm install -g openclaw-cli
 ---
 
 **提示**：本资源导航会持续更新，建议收藏本页面以便随时查阅。如果你发现了优质资源，欢迎在社区分享！
+
+
+---
+
+## 🌐 在线阅读
+
+📖 **想在线阅读此附录？**
+
+[🔗 在线阅读此附录](https://awesome.tryopenclaw.asia/appendix/D-community-resources/)
+
+访问网站获取更好的阅读体验：
+- 📱 响应式设计，支持手机、平板、电脑
+- 🌙 支持黑暗模式，保护眼睛
+- 🔍 内置搜索功能，快速定位内容
+- 📋 目录导航，轻松跳转章节
+
+[🏠 访问完整教程网站](https://awesome.tryopenclaw.asia)

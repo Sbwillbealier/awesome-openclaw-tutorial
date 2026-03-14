@@ -2732,3 +2732,20 @@ OpenCode开发
 **下一章预告**：第13章将学习创意应用探索，包括AI绘画工作流、视频脚本生成、多语言翻译、数据分析自动化和多Agent头脑风暴。
 
 **返回目录**：[README](../../README.md)
+
+
+---
+
+## 🌐 在线阅读
+
+📖 **想在线阅读此章节？**
+
+[🔗 在线阅读此章节](https://awesome.tryopenclaw.asia/docs/04-practical-cases/13-advanced-automation/)
+
+访问网站获取更好的阅读体验：
+- 📱 响应式设计，支持手机、平板、电脑
+- ���� 支持黑暗模式，保护眼睛
+- 🔍 内置搜索功能，快速定位内容
+- 📋 目录导航，轻松跳转章节
+
+[🏠 访问完整教���网站](https://awesome.tryopenclaw.asia)

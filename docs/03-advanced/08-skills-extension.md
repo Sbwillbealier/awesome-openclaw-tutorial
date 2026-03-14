@@ -3516,3 +3516,20 @@ camsnap --url rtsp://192.168.1.100:554/stream --verbose
 **下一章预告**：第9章将学习多平台集成，包括飞书、企业微信、钉钉、QQ等平台的Bot配置，实现随时随地使用 OpenClaw。飞书作为最现代化的平台将优先介绍。
 
 **返回目录**：[README](../../README.md)
+
+
+---
+
+## 🌐 在线阅读
+
+📖 **想在线阅读此章节？**
+
+[🔗 在线阅读此章节](https://awesome.tryopenclaw.asia/docs/03-advanced/08-skills-extension/)
+
+访问网站获取更好的阅读体验：
+- 📱 响应式设计，支持手机、平板、电脑
+- ���� 支持黑暗模式，保护眼睛
+- 🔍 内置搜索功能，快速定位内容
+- 📋 目录导航，轻松跳转章节
+
+[🏠 访问完整教���网站](https://awesome.tryopenclaw.asia)

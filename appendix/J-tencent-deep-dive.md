@@ -783,3 +783,20 @@ https://github.com/kapi2800/qwen3-tts-apple-silicon
 - OpenClaw官方网站：https://openclaw.ai
 - OpenClaw官方文档：https://docs.openclaw.ai
 - ClawHub技能市场：https://clawhub.ai
+
+
+---
+
+## 🌐 在线阅读
+
+📖 **想在线阅读此附录？**
+
+[🔗 在线阅读此附录](https://awesome.tryopenclaw.asia/appendix/J-tencent-deep-dive/)
+
+访问网站获取更好的阅读体验：
+- 📱 响应式设计，支持手机、平板、电脑
+- 🌙 支持黑暗模式，保护眼睛
+- 🔍 内置搜索功能，快速定位内容
+- 📋 目录导航，轻松跳转章节
+
+[🏠 访问完整教程网站](https://awesome.tryopenclaw.asia)

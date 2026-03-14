@@ -1092,3 +1092,20 @@ openclaw gateway restart
 **下一章**：[第4章：本地文件管理](../02-core-features/04-file-management.md) - 让OpenClaw成为你的文件管理神器
 
 **返回目录**：[README](../../README.md)
+
+
+---
+
+## 🌐 在线阅读
+
+📖 **想在线阅读此章节？**
+
+[🔗 在线阅读此章节](https://awesome.tryopenclaw.asia/docs/01-basics/03-quick-start/)
+
+访问网站获取更好的阅读体验：
+- 📱 响应式设计，支持手机、平板、电脑
+- ���� 支持黑暗模式，保护眼睛
+- 🔍 内置搜索功能，快速定位内容
+- 📋 目录导航，轻松跳转章节
+
+[🏠 访问完整教���网站](https://awesome.tryopenclaw.asia)

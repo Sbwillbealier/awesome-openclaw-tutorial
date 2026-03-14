@@ -383,3 +383,19 @@ OpenClaw 采用按量付费模式，相比固定月费的在线服务可节省 7
 **下一章**：[第2章：环境搭建](02-installation.md) - 5分钟完成安装
 
 **返回目录**：[README](../../README.md)
+
+---
+
+## 🌐 在线阅读
+
+📖 **想在线阅读此章节？**
+
+[🔗 在线阅读：第1章 - OpenClaw是什么？](https://awesome.tryopenclaw.asia/docs/01-basics/01-introduction/)
+
+访问网站获取更好的阅读体验：
+- 📱 响应式设计，支持手机、平板、电脑
+- 🌙 支持黑暗模式，保护眼睛
+- 🔍 内置搜索功能，快速定位内容
+- 📋 目录导航，轻松跳转章节
+
+[🏠 访问完整教程网站](https://awesome.tryopenclaw.asia)
