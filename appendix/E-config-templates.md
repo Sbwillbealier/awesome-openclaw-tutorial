@@ -1,901 +1,558 @@
-# 附录E：配置文件模板与示例
+# 附录C 配置模板与自定义参考
 
-> 💡 **开箱即用**：复制这些配置模板，快速完成OpenClaw配置
-
----
+> 💡 **本附录目标**：提供 openclaw.json 的常用配置片段，供你在引导向导完成后按需自定义。所有模板均基于官方文档（https://docs.openclaw.ai/gateway/configuration-examples）验证，适用于v2026.3.7+版本。
+>
+> ⚠️ **新手请注意**：你不需要手动编辑配置文件即可上手使用OpenClaw。直接运行引导向导，它会交互式引导你完成全部配置并自动生成配置文件。本附录的模板适用于向导完成后的进一步自定义。
+>
+> 配置文件路径：~/.openclaw/openclaw.json（JSON5格式，支持注释和尾逗号）
 
 ## 📋 目录
 
-- [基础配置模板](#基础配置模板)
-- [多模型配置](#多模型配置)
-- [多平台集成配置](#多平台集成配置)
-- [Skills配置](#skills配置)
-- [自动化配置](#自动化配置)
-- [高级配置](#高级配置)
+-   C.1 新手上手（推荐方式）
+-   C.2 多模型配置
+-   C.3 多平台集成配置
+-   C.4 Skills配置
+-   C.5 定时任务（Cron）
+-   C.6 多Agent配置
+-   C.7 安全配置
+-   C.8 完整示例：超级个体配置
+-   C.9 快速部署脚本
 
----
+## C.1 新手上手（推荐方式）
 
-## 🎯 基础配置模板
+### 1. 最快上手：直接运行引导向导（强烈推荐）
 
-### 1. 最小化配置（新手推荐）
+> ⚠️ **新手不要手动编辑配置文件。** OpenClaw采用严格的配置校验，一个字段名拼错或结构不对，Gateway就会拒绝启动。引导向导会自动生成正确的配置文件。
 
-**文件位置**：`~/.openclaw/config.json`
+    # 第1步：运行引导向导（会引导你选择模型、输入API Key、配置通道等）
+    openclaw onboard
 
-```json
-{
-  "gateway": {
-    "mode": "local",
-    "port": 18789,
-    "bind": "127.0.0.1"
-  },
-  "models": {
-    "default": "deepseek-chat",
-    "providers": {
-      "deepseek": {
-        "apiKey": "sk-your-deepseek-api-key",
-        "baseURL": "https://api.deepseek.com"
-      }
-    }
-  },
-  "workspace": {
-    "path": "~/Documents/openclaw"
-  }
-}
-```
+    # 第2步：安装并启动守护进程
+    openclaw daemon install
+    openclaw daemon start
 
-**使用说明**：
-1. 替换 `sk-your-deepseek-api-key` 为你的实际API密钥
-2. 保存到 `~/.openclaw/config.json`
-3. 运行 `openclaw gateway run`
+    # 第3步：打开控制面板，开始使用
+    openclaw dashboard
 
----
+向导会引导你完成以下全部配置：
+- 模型选择与API Key输入（支持Anthropic/OpenAI/DeepSeek/Kimi等）
+- 通道配置（WhatsApp/Telegram等）
+- Gateway认证Token生成
+- 工具权限设置
+- Skills推荐安装
 
-### 2. 完整基础配置
+向导完成后，配置文件自动保存在 `~/.openclaw/openclaw.json`。如需进一步自定义，可使用以下方式修改：
 
-```json
-{
-  "gateway": {
-    "mode": "local",
-    "port": 18789,
-    "bind": "127.0.0.1",
-    "cors": {
-      "enabled": true,
-      "origins": ["http://localhost:3000"]
-    },
-    "rateLimit": {
-      "enabled": true,
-      "maxRequests": 100,
-      "windowMs": 60000
-    }
-  },
-  "models": {
-    "default": "deepseek-chat",
-    "timeout": 30000,
-    "maxTokens": 4096,
-    "temperature": 0.7,
-    "streaming": true,
-    "providers": {
-      "deepseek": {
-        "apiKey": "sk-your-api-key",
-        "baseURL": "https://api.deepseek.com",
-        "models": ["deepseek-chat", "deepseek-coder"]
-      }
-    }
-  },
-  "workspace": {
-    "path": "~/Documents/openclaw",
-    "autoSave": true,
-    "backupEnabled": true
-  },
-  "logging": {
-    "level": "info",
-    "file": "~/.openclaw/logs/gateway.log",
-    "maxSize": "10m",
-    "maxFiles": 5
-  }
-}
-```
+    # 方式1：交互式配置向导（推荐）
+    openclaw configure
 
----
+    # 方式2：命令行单项修改
+    openclaw config set agents.defaults.heartbeat.every "30m"
+    openclaw config set session.reset.atHour 4
 
-## 🤖 多模型配置
+    # 方式3：打开配置文件直接编辑
+    openclaw config file   # 显示配置文件路径，用编辑器打开即可
+
+    # 方式4：通过控制面板Web UI修改
+    openclaw dashboard     # 打开后在 Config 标签页可视化编辑
+
+### 2. 向导完成后的常用自定义
+
+以下是向导完成后，你可能想要额外调整的常见配置项。使用 `openclaw config set` 命令逐项修改即可，无需手动编辑JSON文件：
+
+    # 设置中文身份
+    openclaw config set identity.name "小龙虾"
+    openclaw config set identity.theme "专业高效的AI助手"
+    openclaw config set identity.emoji "🦞"
+
+    # 开启心跳（每30分钟主动检查一次）
+    openclaw config set agents.defaults.heartbeat.every "30m"
+    openclaw config set agents.defaults.heartbeat.target "last"
+
+    # 设置会话每日自动重置（凌晨4点，闲置2小时后）
+    openclaw config set session.dmScope "per-channel-peer"
+    openclaw config set session.reset.mode "daily"
+    openclaw config set session.reset.atHour 4
+    openclaw config set session.reset.idleMinutes 120
+
+    # 确保工具权限为完整模式（否则只能聊天不能干活）
+    openclaw config set agents.defaults.tools.profile "full"
+
+    # 修改后重启生效
+    openclaw daemon restart
+
+## C.2 多模型配置
 
 ### 1. 国产模型组合（省钱方案）
 
-```json
-{
-  "models": {
-    "default": "deepseek-chat",
-    "providers": {
-      "deepseek": {
-        "apiKey": "sk-deepseek-key",
-        "baseURL": "https://api.deepseek.com",
-        "models": ["deepseek-chat", "deepseek-coder"]
-      },
-      "kimi": {
-        "apiKey": "your-kimi-key",
-        "baseURL": "https://api.moonshot.cn/v1",
-        "models": ["moonshot-v1-8k", "moonshot-v1-32k", "moonshot-v1-128k"]
-      },
-      "glm": {
-        "apiKey": "your-glm-key",
-        "baseURL": "https://open.bigmodel.cn/api/paas/v4",
-        "models": ["glm-4", "glm-4-flash"]
-      }
-    },
-    "routing": {
-      "rules": [
-        {
-          "condition": "message.length > 10000",
-          "model": "moonshot-v1-128k",
-          "reason": "长文档处理"
+> ⚠️ 模型认证通过 `openclaw models auth add` 命令交互式配置，API Key 不直接写在配置文件中。以下配置设置模型选择和备用策略。
+
+    {
+      agents: {
+        defaults: {
+          model: {
+            // 主模型：DeepSeek（最便宜）
+            primary: "deepseek/deepseek-chat",
+            // 备用模型：Kimi长文档 → GLM兜底
+            fallbacks: [
+              "moonshot/moonshot-v1-128k",
+              "zhipu/glm-4-flash",
+            ],
+          },
+          models: {
+            "deepseek/deepseek-chat": { alias: "ds" },
+            "moonshot/moonshot-v1-128k": { alias: "kimi" },
+            "zhipu/glm-4-flash": { alias: "glm" },
+          },
         },
-        {
-          "condition": "message.includes('代码')",
-          "model": "deepseek-coder",
-          "reason": "代码相关任务"
-        },
-        {
-          "condition": "default",
-          "model": "deepseek-chat",
-          "reason": "日常对话"
-        }
-      ]
+      },
     }
-  }
-}
-```
+
+**配置API Key（命令行执行）**：
+
+    # 添加DeepSeek认证
+    openclaw models auth add
+    # 选择 deepseek → 输入 API Key
+
+    # 添加Kimi认证
+    openclaw models auth add
+    # 选择 moonshot → 输入 API Key
+
+    # 添加智谱GLM认证
+    openclaw models auth add
+    # 选择 zhipu → 输入 API Key
+
+**在对话中切换模型**：
+
+    /model ds      # 切换到DeepSeek
+    /model kimi    # 切换到Kimi
+    /model glm     # 切换到GLM
 
 **成本估算**：
-- 日常对话：DeepSeek（0.001元/1K tokens）
-- 长文档：Kimi（0.012元/1K tokens）
-- 代码任务：DeepSeek Coder（0.001元/1K tokens）
+- 日常对话：DeepSeek（约0.001元/1K tokens）
+- 长文档：Kimi 128K（约0.012元/1K tokens）
 - 月均成本：5-30元
-
----
 
 ### 2. 国际模型配置
 
-```json
-{
-  "models": {
-    "default": "gpt-4o-mini",
-    "providers": {
-      "openai": {
-        "apiKey": "sk-your-openai-key",
-        "baseURL": "https://api.openai.com/v1",
-        "models": ["gpt-4o", "gpt-4o-mini", "gpt-3.5-turbo"]
-      },
-      "anthropic": {
-        "apiKey": "sk-ant-your-key",
-        "baseURL": "https://api.anthropic.com",
-        "models": ["claude-3-5-sonnet-20241022", "claude-3-haiku-20240307"]
-      },
-      "google": {
-        "apiKey": "your-google-key",
-        "baseURL": "https://generativelanguage.googleapis.com/v1beta",
-        "models": ["gemini-2.0-flash-exp", "gemini-1.5-pro"]
-      }
-    },
-    "routing": {
-      "rules": [
-        {
-          "condition": "task.type === 'complex'",
-          "model": "claude-3-5-sonnet-20241022"
+    {
+      agents: {
+        defaults: {
+          model: {
+            primary: "anthropic/claude-sonnet-4-5",
+            fallbacks: [
+              "openai/gpt-5.2",
+              "anthropic/claude-opus-4-6",
+            ],
+          },
+          imageModel: {
+            primary: "anthropic/claude-sonnet-4-5",
+          },
+          models: {
+            "anthropic/claude-opus-4-6": { alias: "opus" },
+            "anthropic/claude-sonnet-4-5": { alias: "sonnet" },
+            "openai/gpt-5.2": { alias: "gpt" },
+          },
         },
-        {
-          "condition": "task.type === 'simple'",
-          "model": "gpt-4o-mini"
-        }
-      ]
+      },
     }
-  }
-}
-```
 
----
+### 3. 中转API配置
 
-### 3. 中转API配置（推荐）
+> 中转API使用OpenAI兼容格式，通过环境变量设置Key和BaseURL。
 
-```json
-{
-  "models": {
-    "default": "gpt-4o-mini",
-    "providers": {
-      "relay": {
-        "apiKey": "your-relay-api-key",
-        "baseURL": "https://api.relay-service.com/v1",
-        "models": [
-          "gpt-4o",
-          "gpt-4o-mini",
-          "claude-3-5-sonnet-20241022",
-          "deepseek-chat",
-          "moonshot-v1-8k",
-          "glm-4"
-        ]
-      }
+    {
+      env: {
+        vars: {
+          OPENAI_API_KEY: "your-relay-api-key",
+          OPENAI_BASE_URL: "https://apipro.maynor1024.live/v1",
+        },
+      },
+      agents: {
+        defaults: {
+          model: {
+            primary: "openai/gpt-4o-mini",
+            fallbacks: ["openai/gpt-4o"],
+          },
+        },
+      },
     }
-  }
-}
-```
 
 **优势**：
-- ✅ 一个API密钥访问所有模型
-- ✅ 统一计费，成本更低
+- ✅ 一个API密钥访问多个模型
 - ✅ 国内访问速度快
-- ✅ 自动负载均衡
+- ✅ 成本更低
 
----
+### 4. 本地模型（完全免费）
 
-## 📱 多平台集成配置
-
-### 1. 飞书Bot配置
-
-```json
-{
-  "channels": {
-    "feishu": {
-      "enabled": true,
-      "appId": "cli_your_app_id",
-      "appSecret": "your_app_secret",
-      "verificationToken": "your_verification_token",
-      "encryptKey": "your_encrypt_key",
-      "webhookUrl": "https://your-domain.com/webhook/feishu",
-      "features": {
-        "streaming": true,
-        "fileUpload": true,
-        "imageGeneration": true
+    {
+      agents: {
+        defaults: {
+          model: {
+            primary: "ollama/qwen2.5:32b",
+            fallbacks: ["ollama/llama3.1:8b"],
+          },
+        },
       },
-      "permissions": [
-        "im:message",
-        "im:message.group_at_msg",
-        "im:message.p2p_msg",
-        "contact:user.base:readonly"
-      ]
     }
-  }
-}
-```
 
-**获取参数步骤**：
-1. 访问 [飞书开放平台](https://open.feishu.cn/)
-2. 创建企业自建应用
-3. 获取 App ID 和 App Secret
-4. 配置事件订阅和权限
-5. 设置回调地址
+**前提**：需先安装Ollama并拉取模型：
 
----
+    curl -fsSL https://ollama.ai/install.sh | sh
+    ollama pull qwen2.5:32b
 
-### 2. 企业微信Bot配置
+## C.3 多平台集成配置
 
-```json
-{
-  "channels": {
-    "wecom": {
-      "enabled": true,
-      "corpId": "ww1234567890abcdef",
-      "agentId": "1000001",
-      "secret": "your_agent_secret",
-      "token": "your_token",
-      "encodingAESKey": "your_aes_key",
-      "webhookUrl": "https://your-domain.com/webhook/wecom",
-      "features": {
-        "fileUpload": true,
-        "cardMessage": true
-      }
+### 1. 飞书Bot
+
+    {
+      channels: {
+        feishu: {
+          enabled: true,
+          appId: "cli_your_app_id",
+          appSecret: "your_app_secret",
+          dmPolicy: "pairing",
+        },
+      },
     }
-  }
-}
-```
 
----
+> 飞书接入需安装插件：`openclaw plugins install @m1heng-clawd/feishu`，详见本书第12章。
 
-### 3. 钉钉Bot配置
+### 2. 企业微信Bot
 
-```json
-{
-  "channels": {
-    "dingtalk": {
-      "enabled": true,
-      "appKey": "your_app_key",
-      "appSecret": "your_app_secret",
-      "agentId": "your_agent_id",
-      "webhookUrl": "https://your-domain.com/webhook/dingtalk",
-      "features": {
-        "markdown": true,
-        "actionCard": true
-      }
+    {
+      channels: {
+        wework: {
+          enabled: true,
+          corpId: "ww_your_corp_id",
+          agentSecret: "your_agent_secret",
+          dmPolicy: "pairing",
+        },
+      },
     }
-  }
-}
-```
 
----
+> 企业微信接入需安装插件：`openclaw plugins install @m1heng-clawd/wework`，详见本书第13章。
 
-### 4. Telegram Bot配置
+### 3. 钉钉Bot
 
-```json
-{
-  "channels": {
-    "telegram": {
-      "enabled": true,
-      "botToken": "1234567890:ABCdefGHIjklMNOpqrsTUVwxyz",
-      "allowedUsers": [123456789, 987654321],
-      "features": {
-        "inlineKeyboard": true,
-        "fileUpload": true,
-        "voiceMessage": true
-      }
+    {
+      channels: {
+        dingtalk: {
+          enabled: true,
+          appKey: "your_app_key",
+          appSecret: "your_app_secret",
+          dmPolicy: "pairing",
+        },
+      },
     }
-  }
-}
-```
 
----
+> 详见本书第13章。
 
-### 5. 多平台同时配置
+### 4. Telegram Bot
 
-```json
-{
-  "channels": {
-    "feishu": {
-      "enabled": true,
-      "appId": "cli_feishu_app_id",
-      "appSecret": "feishu_secret"
-    },
-    "wecom": {
-      "enabled": true,
-      "corpId": "ww_corp_id",
-      "agentId": "1000001",
-      "secret": "wecom_secret"
-    },
-    "telegram": {
-      "enabled": true,
-      "botToken": "telegram_bot_token"
+    {
+      channels: {
+        telegram: {
+          enabled: true,
+          botToken: "1234567890:ABCdefGHIjklMNOpqrsTUVwxyz",
+          dmPolicy: "pairing",
+          allowFrom: ["your_telegram_user_id"],
+          groups: { "*": { requireMention: true } },
+        },
+      },
     }
-  },
-  "routing": {
-    "defaultChannel": "feishu",
-    "rules": [
-      {
-        "channel": "telegram",
-        "users": ["user_telegram_id"]
-      },
-      {
-        "channel": "wecom",
-        "users": ["user_wecom_id"]
-      }
-    ]
-  }
-}
-```
 
----
+### 5. 多平台同时接入
 
-## 🧩 Skills配置
-
-### 1. 必装Skills配置
-
-```json
-{
-  "skills": {
-    "enabled": true,
-    "autoUpdate": true,
-    "path": "~/.openclaw/skills",
-    "installed": [
-      {
-        "name": "@openclaw/skill-file-search",
-        "version": "latest",
-        "enabled": true,
-        "config": {
-          "searchPaths": ["~/Documents", "~/Desktop", "~/Downloads"],
-          "excludePatterns": ["node_modules", ".git", "*.tmp"],
-          "maxResults": 50
-        }
-      },
-      {
-        "name": "@openclaw/skill-web-search",
-        "version": "latest",
-        "enabled": true,
-        "config": {
-          "provider": "brave",
-          "apiKey": "your-brave-api-key",
-          "maxResults": 10
-        }
-      },
-      {
-        "name": "@openclaw/skill-calendar",
-        "version": "latest",
-        "enabled": true,
-        "config": {
-          "provider": "apple",
-          "defaultCalendar": "Work",
-          "timezone": "Asia/Shanghai"
-        }
-      },
-      {
-        "name": "@openclaw/skill-notion",
-        "version": "latest",
-        "enabled": true,
-        "config": {
-          "apiKey": "your-notion-api-key",
-          "databaseId": "your-database-id"
-        }
-      }
-    ]
-  }
-}
-```
-
----
-
-### 2. Skills双幻神配置
-
-```json
-{
-  "skills": {
-    "installed": [
-      {
-        "name": "@openclaw/skill-find-skills",
-        "version": "latest",
-        "enabled": true,
-        "config": {
-          "autoSuggest": true,
-          "threshold": 0.7
-        }
-      },
-      {
-        "name": "@openclaw/skill-proactive-agent",
-        "version": "latest",
-        "enabled": true,
-        "config": {
-          "proactiveMode": true,
-          "contextAware": true,
-          "suggestionFrequency": "medium"
-        }
-      }
-    ]
-  }
-}
-```
-
----
-
-## ⚙️ 自动化配置
-
-### 1. 定时任务配置
-
-```json
-{
-  "automation": {
-    "enabled": true,
-    "tasks": [
-      {
-        "name": "daily-ai-report",
-        "schedule": "0 9 * * *",
-        "action": {
-          "type": "message",
-          "content": "生成今天的AI行业日报，包括：1. 最新AI新闻 2. 技术突破 3. 产品发布",
-          "channel": "feishu"
+    {
+      channels: {
+        telegram: {
+          enabled: true,
+          botToken: "your_telegram_token",
+          dmPolicy: "pairing",
+          groups: { "*": { requireMention: true } },
         },
-        "enabled": true
+        whatsapp: {
+          dmPolicy: "pairing",
+          allowFrom: ["+86138xxxxxxxx"],
+          groups: { "*": { requireMention: true } },
+        },
+        discord: {
+          enabled: true,
+          token: "your_discord_token",
+          dm: { enabled: true },
+        },
       },
-      {
-        "name": "weekly-summary",
-        "schedule": "0 18 * * 5",
-        "action": {
-          "type": "message",
-          "content": "总结本周工作，生成周报",
-          "channel": "feishu"
+    }
+
+## C.4 Skills配置
+
+> ⚠️ Skills通过 `clawhub install <slug>` 安装，不在配置文件中列出安装列表。配置文件中只对已安装的Skills进行个性化配置（如API Key、启停等）。
+
+    {
+      skills: {
+        entries: {
+          "nano-banana-pro": {
+            enabled: true,
+            env: {
+              GEMINI_API_KEY: "your-gemini-key",
+            },
+          },
+          "brave-search": {
+            enabled: true,
+            env: {
+              BRAVE_API_KEY: "your-brave-key",
+            },
+          },
+          "tavily-search": {
+            enabled: true,
+            env: {
+              TAVILY_API_KEY: "your-tavily-key",
+            },
+          },
         },
-        "enabled": true
       },
-      {
-        "name": "backup-notes",
-        "schedule": "0 2 * * *",
-        "action": {
-          "type": "command",
-          "command": "openclaw backup --type notes --destination ~/Backups"
-        },
-        "enabled": true
-      }
-    ]
-  }
-}
-```
+    }
 
-**Cron表达式说明**：
-- `0 9 * * *` - 每天9:00
-- `0 18 * * 5` - 每周五18:00
-- `0 2 * * *` - 每天2:00
-- `*/30 * * * *` - 每30分钟
-- `0 */2 * * *` - 每2小时
+**安装Skills（命令行执行）**：
 
----
+    clawhub install brave-search nano-banana-pro summarize \
+      find-skills self-improving proactive-agent skill-vetter
 
-### 2. 网站监控配置
+    # 查看已安装Skills
+    openclaw skills list
 
-```json
-{
-  "automation": {
-    "monitoring": [
-      {
-        "name": "claude-updates",
-        "url": "https://www.anthropic.com/news",
-        "interval": 3600,
-        "selector": ".news-item",
-        "action": {
-          "type": "notify",
-          "channel": "feishu",
-          "message": "Claude有新更新：{{title}}"
-        },
-        "enabled": true
+## C.5 定时任务（Cron）
+
+> ⚠️ 定时任务通过 `openclaw cron add` 命令创建，不在配置文件中定义任务列表。配置文件中只设置Cron的全局参数。
+
+**配置文件中的Cron全局设置**：
+
+    {
+      cron: {
+        enabled: true,
+        maxConcurrentRuns: 2,
+        sessionRetention: "24h",
       },
-      {
-        "name": "github-releases",
-        "url": "https://api.github.com/repos/openclaw/openclaw/releases/latest",
-        "interval": 7200,
-        "action": {
-          "type": "notify",
-          "channel": "telegram",
-          "message": "OpenClaw发布新版本：{{tag_name}}"
-        },
-        "enabled": true
-      }
-    ]
-  }
-}
-```
+    }
 
----
+**创建定时任务（命令行执行）**：
 
-### 3. 工作流自动化
+    # 每天早上9点推送AI行业日报
+    openclaw cron add \
+      --name "daily-ai-report" \
+      --cron "0 9 * * *" \
+      --tz "Asia/Shanghai" \
+      --session isolated \
+      --message "生成今天的AI行业日报" \
+      --deliver --channel feishu
 
-```json
-{
-  "workflows": {
-    "content-creation": {
-      "name": "内容创作工作流",
-      "steps": [
-        {
-          "name": "topic-research",
-          "action": "web_search",
-          "params": {
-            "query": "{{topic}}",
-            "maxResults": 10
-          }
+    # 每周五18点生成周报
+    openclaw cron add \
+      --name "weekly-summary" \
+      --cron "0 18 * * 5" \
+      --tz "Asia/Shanghai" \
+      --session isolated \
+      --message "总结本周工作，生成周报" \
+      --deliver --channel feishu
+
+    # 查看/删除定时任务
+    openclaw cron list
+    openclaw cron remove <job-id>
+
+**Cron表达式速查**：
+- `0 9 * * *` — 每天9:00
+- `0 18 * * 5` — 每周五18:00
+- `0 */2 * * *` — 每2小时
+- `*/30 * * * *` — 每30分钟
+- `0 9 * * 1-5` — 工作日每天9:00
+
+## C.6 多Agent配置
+
+    {
+      agents: {
+        defaults: {
+          workspace: "~/.openclaw/workspace",
+          model: {
+            primary: "anthropic/claude-sonnet-4-5",
+          },
         },
-        {
-          "name": "outline-generation",
-          "action": "generate",
-          "params": {
-            "prompt": "根据以下资料生成文章大纲：{{research_results}}"
-          }
-        },
-        {
-          "name": "content-writing",
-          "action": "generate",
-          "params": {
-            "prompt": "根据大纲撰写完整文章：{{outline}}"
-          }
-        },
-        {
-          "name": "save-to-notion",
-          "action": "skill",
-          "skill": "@openclaw/skill-notion",
-          "params": {
-            "action": "create_page",
-            "content": "{{article}}"
-          }
-        }
+        list: [
+          {
+            id: "main",
+            default: true,
+            workspace: "~/.openclaw/workspace-main",
+          },
+          {
+            id: "content",
+            workspace: "~/.openclaw/workspace-content",
+            model: {
+              primary: "anthropic/claude-opus-4-6",
+            },
+          },
+          {
+            id: "code",
+            workspace: "~/.openclaw/workspace-code",
+            model: {
+              primary: "deepseek/deepseek-coder",
+            },
+          },
+        ],
+      },
+      bindings: [
+        { agentId: "content", match: { channel: "telegram" } },
+        { agentId: "code", match: { channel: "discord" } },
       ],
-      "enabled": true
     }
-  }
-}
-```
 
----
+## C.7 安全配置
 
-## 🔧 高级配置
+### Gateway认证（v2026.3.7+必须配置）
 
-### 1. 多Agent配置
-
-```json
-{
-  "agents": {
-    "list": [
-      {
-        "id": "main-assistant",
-        "name": "主助理",
-        "model": "gpt-4o",
-        "systemPrompt": "你是一个专业的AI助手，擅长处理各类任务。",
-        "workspace": "~/Documents/openclaw/main",
-        "skills": ["file-search", "web-search", "calendar"],
-        "channels": ["feishu"]
-      },
-      {
-        "id": "content-creator",
-        "name": "内容创作助手",
-        "model": "claude-3-5-sonnet-20241022",
-        "systemPrompt": "你是一个专业的内容创作者，擅长写作和创意。",
-        "workspace": "~/Documents/openclaw/content",
-        "skills": ["web-search", "notion", "image-generation"],
-        "channels": ["telegram"]
-      },
-      {
-        "id": "tech-expert",
-        "name": "技术专家",
-        "model": "deepseek-coder",
-        "systemPrompt": "你是一个资深的技术专家，擅长编程和技术问题。",
-        "workspace": "~/Documents/openclaw/tech",
-        "skills": ["file-search", "github"],
-        "channels": ["wecom"]
-      }
-    ],
-    "routing": {
-      "rules": [
-        {
-          "condition": "message.includes('写文章')",
-          "agent": "content-creator"
+    {
+      gateway: {
+        port: 18789,
+        auth: {
+          mode: "token",
+          token: "your-secret-token-here",
         },
-        {
-          "condition": "message.includes('代码')",
-          "agent": "tech-expert"
-        },
-        {
-          "condition": "default",
-          "agent": "main-assistant"
-        }
-      ]
-    }
-  }
-}
-```
-
----
-
-### 2. 代理和网络配置
-
-```json
-{
-  "network": {
-    "proxy": {
-      "enabled": true,
-      "http": "http://127.0.0.1:7890",
-      "https": "http://127.0.0.1:7890",
-      "bypass": ["localhost", "127.0.0.1", "*.local"]
-    },
-    "dns": {
-      "servers": ["8.8.8.8", "1.1.1.1"],
-      "timeout": 5000
-    },
-    "retry": {
-      "enabled": true,
-      "maxAttempts": 3,
-      "backoff": "exponential"
-    }
-  }
-}
-```
-
----
-
-### 3. 安全和隐私配置
-
-```json
-{
-  "security": {
-    "encryption": {
-      "enabled": true,
-      "algorithm": "aes-256-gcm",
-      "keyPath": "~/.openclaw/keys/encryption.key"
-    },
-    "authentication": {
-      "enabled": true,
-      "type": "jwt",
-      "secret": "your-jwt-secret",
-      "expiresIn": "7d"
-    },
-    "rateLimit": {
-      "enabled": true,
-      "maxRequests": 100,
-      "windowMs": 60000,
-      "blockDuration": 300000
-    },
-    "allowlist": {
-      "enabled": true,
-      "ips": ["127.0.0.1", "192.168.1.0/24"],
-      "users": ["user_id_1", "user_id_2"]
-    }
-  },
-  "privacy": {
-    "dataRetention": {
-      "messages": 30,
-      "logs": 7,
-      "cache": 1
-    },
-    "anonymization": {
-      "enabled": true,
-      "fields": ["email", "phone", "address"]
-    }
-  }
-}
-```
-
----
-
-### 4. 性能优化配置
-
-```json
-{
-  "performance": {
-    "cache": {
-      "enabled": true,
-      "type": "redis",
-      "host": "localhost",
-      "port": 6379,
-      "ttl": 3600,
-      "maxSize": "1gb"
-    },
-    "concurrency": {
-      "maxConcurrentRequests": 10,
-      "queueSize": 100,
-      "timeout": 30000
-    },
-    "optimization": {
-      "compression": true,
-      "minify": true,
-      "lazyLoad": true
-    }
-  }
-}
-```
-
----
-
-## 📦 完整配置示例
-
-### 超级个体完整配置
-
-```json
-{
-  "gateway": {
-    "mode": "local",
-    "port": 18789,
-    "bind": "0.0.0.0"
-  },
-  "models": {
-    "default": "deepseek-chat",
-    "providers": {
-      "deepseek": {
-        "apiKey": "sk-your-deepseek-key",
-        "baseURL": "https://api.deepseek.com"
       },
-      "kimi": {
-        "apiKey": "your-kimi-key",
-        "baseURL": "https://api.moonshot.cn/v1"
-      }
-    },
-    "routing": {
-      "rules": [
-        {
-          "condition": "message.length > 10000",
-          "model": "moonshot-v1-128k"
+    }
+
+**生成安全Token**：
+
+    openssl rand -hex 32
+
+> ⚠️ 从v2026.3.7起，Gateway认证为强制要求。
+
+### 沙箱配置（Docker隔离）
+
+    {
+      agents: {
+        defaults: {
+          sandbox: {
+            mode: "non-main",
+            scope: "agent",
+          },
         },
-        {
-          "condition": "default",
-          "model": "deepseek-chat"
-        }
-      ]
+      },
     }
-  },
-  "channels": {
-    "feishu": {
-      "enabled": true,
-      "appId": "cli_your_app_id",
-      "appSecret": "your_app_secret",
-      "features": {
-        "streaming": true,
-        "fileUpload": true
-      }
+
+### 工具权限控制
+
+    {
+      agents: {
+        defaults: {
+          tools: {
+            profile: "full",     // full | coding | messaging
+          },
+        },
+      },
     }
-  },
-  "skills": {
-    "enabled": true,
-    "installed": [
-      "@openclaw/skill-file-search",
-      "@openclaw/skill-web-search",
-      "@openclaw/skill-calendar",
-      "@openclaw/skill-notion",
-      "@openclaw/skill-find-skills",
-      "@openclaw/skill-proactive-agent"
-    ]
-  },
-  "automation": {
-    "enabled": true,
-    "tasks": [
-      {
-        "name": "daily-report",
-        "schedule": "0 9 * * *",
-        "action": {
-          "type": "message",
-          "content": "生成今日AI行业日报",
-          "channel": "feishu"
-        }
-      }
-    ]
-  },
-  "workspace": {
-    "path": "~/Documents/openclaw",
-    "autoSave": true
-  }
-}
-```
 
----
+## C.8 完整示例：超级个体配置
 
-## 🚀 快速部署脚本
+    // ~/.openclaw/openclaw.json
+    {
+      identity: {
+        name: "小龙虾",
+        theme: "专业高效的AI超级个体助手",
+        emoji: "🦞",
+      },
+      gateway: {
+        port: 18789,
+        auth: { mode: "token", token: "替换为你的随机Token" },
+      },
+      agents: {
+        defaults: {
+          workspace: "~/.openclaw/workspace",
+          userTimezone: "Asia/Shanghai",
+          model: {
+            primary: "deepseek/deepseek-chat",
+            fallbacks: ["moonshot/moonshot-v1-128k", "zhipu/glm-4-flash"],
+          },
+          models: {
+            "deepseek/deepseek-chat": { alias: "ds" },
+            "moonshot/moonshot-v1-128k": { alias: "kimi" },
+            "zhipu/glm-4-flash": { alias: "glm" },
+          },
+          heartbeat: { every: "30m", target: "last" },
+          tools: { profile: "full" },
+        },
+      },
+      channels: {
+        feishu: {
+          enabled: true,
+          appId: "cli_your_app_id",
+          appSecret: "your_app_secret",
+          dmPolicy: "pairing",
+        },
+      },
+      skills: {
+        entries: {
+          "brave-search": {
+            enabled: true,
+            env: { BRAVE_API_KEY: "your-brave-key" },
+          },
+        },
+      },
+      session: {
+        dmScope: "per-channel-peer",
+        reset: { mode: "daily", atHour: 4, idleMinutes: 120 },
+      },
+      cron: { enabled: true, maxConcurrentRuns: 2 },
+    }
 
-### 一键配置脚本
+**配置完成后执行**：
 
-```bash
-#!/bin/bash
-# OpenClaw 快速配置脚本
+    openclaw models auth add
+    clawhub install skill-vetter find-skills self-improving proactive-agent \
+      brave-search summarize nano-banana-pro
+    openclaw cron add --name "daily-report" --cron "0 9 * * *" \
+      --tz "Asia/Shanghai" --session isolated \
+      --message "生成今日AI行业日报" --deliver --channel feishu
+    openclaw daemon start
+    openclaw dashboard
 
-# 创建配置目录
-mkdir -p ~/.openclaw/skills
-mkdir -p ~/.openclaw/logs
-mkdir -p ~/Documents/openclaw
+## C.9 快速部署脚本
 
-# 下载配置模板
-curl -o ~/.openclaw/config.json https://raw.githubusercontent.com/xianyu110/awesome-openclaw-tutorial/main/examples/configs/basic-config.json
+### 一键配置脚本（Mac/Linux）
 
-# 提示用户输入API密钥
-echo "请输入你的DeepSeek API密钥："
-read -r DEEPSEEK_KEY
+    #!/bin/bash
+    set -e
+    echo "🦞 OpenClaw 快速配置开始..."
+    mkdir -p ~/.openclaw/workspace
+    TOKEN=$(openssl rand -hex 32)
 
-# 更新配置文件
-sed -i '' "s/sk-your-deepseek-api-key/$DEEPSEEK_KEY/g" ~/.openclaw/config.json
+    cat > ~/.openclaw/openclaw.json << EOF
+    {
+      gateway: { port: 18789, auth: { mode: "token", token: "$TOKEN" } },
+      identity: { name: "小龙虾", theme: "专业高效的AI助手", emoji: "🦞" },
+      agents: {
+        defaults: {
+          workspace: "~/.openclaw/workspace",
+          userTimezone: "Asia/Shanghai",
+          tools: { profile: "full" },
+        },
+      },
+      session: { dmScope: "per-channel-peer", reset: { mode: "daily", atHour: 4 } },
+      cron: { enabled: true },
+    }
+    EOF
 
-# 安装必备Skills
-clawhub install @openclaw/skill-file-search
-clawhub install @openclaw/skill-web-search
-clawhub install @openclaw/skill-calendar
-
-# 启动Gateway
-openclaw gateway run
-
-echo "✅ OpenClaw配置完成！"
-echo "访问 http://localhost:18789 开始使用"
-```
-
----
+    echo "✅ 配置文件已生成（Token: $TOKEN）"
+    openclaw onboard
+    clawhub install skill-vetter find-skills self-improving proactive-agent
+    openclaw daemon install
+    openclaw daemon start
+    echo "✅ 完成！运行 openclaw dashboard 打开控制面板"
 
 ## 📚 相关资源
 
-- [第2章：环境搭建](../docs/01-basics/02-installation.md)
-- [第11章：高级配置](../docs/03-advanced/11-advanced-configuration.md)
-- [附录A：命令速查表](A-command-reference.md)
-- [附录G：文档链接验证](G-links-validation.md)
+-   官方配置文档：https://docs.openclaw.ai/gateway/configuration
+-   官方配置示例：https://docs.openclaw.ai/gateway/configuration-examples
+-   官方配置字段参考：https://docs.openclaw.ai/gateway/configuration-reference
+-   本书第2-4章：安装部署与配置详解
+-   附录A：命令速查表
 
----
-
-**最后更新**：2026年2月14日
-
-
----
-
-## 🌐 在线阅读
-
-📖 **想在线阅读此附录？**
-
-[🔗 在线阅读此附录](https://awesome.tryopenclaw.asia/appendix/E-config-templates/)
-
-访问网站获取更好的阅读体验：
-- 📱 响应式设计，支持手机、平板、电脑
-- 🌙 支持黑暗模式，保护眼睛
-- 🔍 内置搜索功能，快速定位内容
-- 📋 目录导航，轻松跳转章节
-
-[🏠 访问完整教程网站](https://awesome.tryopenclaw.asia)
+**提示**：本模板基于v2026.3.7+版本验证。OpenClaw配置采用严格校验，未知字段会导致Gateway拒绝启动。如遇启动失败，运行 `openclaw doctor` 查看具体问题。

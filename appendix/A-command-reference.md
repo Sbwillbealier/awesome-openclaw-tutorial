@@ -1,764 +1,497 @@
 # 附录A 命令速查表
 
-> 💡 **本附录目标**：提供OpenClaw常用命令的快速参考，方便日常使用时查阅。
+> 💡 **本附录目标**：提供OpenClaw常用命令的快速参考。所有命令均基于官方CLI文档（https://docs.openclaw.ai/cli）验证，适用于v2026.3.7+版本。
 
 ## 📋 目录
 
-- A.1 基础命令
-- A.2 文件操作命令
-- A.3 系统操作命令
-- A.4 Skills管理命令
-- A.5 高级命令
+-   A.1 安装与初始化
+-   A.2 配置管理（config）
+-   A.3 Gateway与守护进程（daemon）
+-   A.4 状态与诊断
+-   A.5 通道管理（channels）
+-   A.6 模型管理（models）
+-   A.7 Skills管理
+-   A.8 插件管理（plugins）
+-   A.9 日志与会话
+-   A.10 定时任务（cron）
+-   A.11 消息发送（message）
+-   A.12 安全与备份
+-   A.13 重置与卸载
+-   A.14 常用场景组合
+-   A.15 配置文件路径
 
----
+## A.1 安装与初始化
 
-## A.1 基础命令
+    # 全局安装OpenClaw
+    npm install -g openclaw@latest
 
-### A.1.1 启动与停止
+    # 首次引导向导（推荐）
+    openclaw onboard
 
-```bash
-# 启动OpenClaw
-openclaw start
+    # 引导向导（高级模式，完整控制每个步骤）
+    openclaw onboard --advanced
 
-# 停止OpenClaw
-openclaw stop
+    # 重新运行引导向导（重置配置+凭据+会话）
+    openclaw onboard --reset
 
-# 重启OpenClaw
-openclaw restart
+    # 交互式配置向导（已安装后修改配置）
+    openclaw configure
 
-# 查看运行状态
-openclaw status
+    # 查看版本
+    openclaw --version
 
-# 启动TUI界面
-openclaw tui
+    # 查看帮助
+    openclaw --help
 
-# 启动Gateway
-openclaw gateway start
+    # 查看子命令帮助
+    openclaw config --help
 
-# 停止Gateway
-openclaw gateway stop
+## A.2 配置管理（config）
 
-# 重启Gateway
-openclaw gateway restart
-```
+> ⚠️ `openclaw config` 不带子命令等同于 `openclaw configure`（打开交互式向导）。
+> config 仅支持 `get`、`set`、`unset`、`file`、`validate` 五个子命令。
 
-### A.1.2 版本与帮助
+    # 查看特定配置项
+    openclaw config get <path>
+    openclaw config get gateway.port
+    openclaw config get agents.defaults.workspace
+    openclaw config get agents.list[0].id
 
-```bash
-# 查看版本
-openclaw --version
-openclaw -v
+    # 设置配置项（值自动解析为JSON5，否则视为字符串）
+    openclaw config set <path> <value>
+    openclaw config set gateway.port 19001 --strict-json
+    openclaw config set agents.defaults.heartbeat.every "2h"
+    openclaw config set channels.whatsapp.groups '["*"]' --strict-json
 
-# 查看帮助
-openclaw --help
-openclaw -h
+    # 删除配置项
+    openclaw config unset <path>
+    openclaw config unset tools.web.search.apiKey
 
-# 查看子命令帮助
-openclaw config --help
-openclaw models --help
-openclaw skills --help
+    # 查看配置文件路径
+    openclaw config file
 
-# 健康检查
-openclaw health
+    # 校验配置文件
+    openclaw config validate
 
-# 综合诊断与修复建议
-openclaw doctor
-openclaw doctor --yes  # 自动执行修复
-openclaw doctor --non-interactive  # 非交互模式
-```
+> ⚠️ **不存在的命令**：`config list`、`config reset`、`config export`、`config import`、`config delete` 均不是有效子命令。查看全部配置请直接打开配置文件：`openclaw config file`。重置配置请使用 `openclaw reset`。
 
-### A.1.3 配置管理
+## A.3 Gateway与守护进程（daemon）
 
-```bash
-# 交互式配置向导
-openclaw configure
+> ⚠️ Gateway的启停通过 `daemon` 命令管理，而非 `gateway start/stop`。
 
-# 查看所有配置
-openclaw config list
+    # 安装系统服务（macOS: LaunchAgent / Linux: systemd）
+    openclaw daemon install
 
-# 查看特定配置
-openclaw config get <path>
-openclaw config get model.apiKey
-openclaw config get model.name
+    # 启动守护进程
+    openclaw daemon start
 
-# 设置配置（支持JSON5/raw文本）
-openclaw config set <path> <value>
-openclaw config set model.apiKey "sk-xxx"
-openclaw config set model.name "claude-sonnet-4"
+    # 停止守护进程
+    openclaw daemon stop
 
-# 删除配置
-openclaw config unset <path>
-openclaw config delete model.apiKey
+    # 重启守护进程（配置变更后执行）
+    openclaw daemon restart
 
-# 重置配置
-openclaw config reset
+    # 查看守护进程状态
+    openclaw daemon status
 
-# 导出配置
-openclaw config export > config-backup.json
+    # 卸载系统服务
+    openclaw daemon uninstall
 
-# 导入配置
-openclaw config import config-backup.json
-```
+    # 查看守护进程日志
+    openclaw daemon logs
 
-### A.1.4 Gateway管理
+    # 直接运行Gateway（前台模式，适合调试）
+    openclaw gateway
 
-```bash
-# 安装系统服务（根据平台注册守护进程）
-openclaw gateway install
+    # Gateway运行参数
+    openclaw gateway --port 18789 --verbose
 
-# 启动Gateway服务
-openclaw gateway start
+    # 查询运行中的Gateway健康状态
+    openclaw gateway health
 
-# 停止Gateway服务
-openclaw gateway stop
+    # 查询Gateway详细状态
+    openclaw gateway status
 
-# 重启Gateway服务（配置变更后应用）
-openclaw gateway restart
+    # 探测Gateway（附加检查）
+    openclaw gateway probe
 
-# 查看Gateway系统服务状态
-openclaw gateway status
+    # 发现局域网内的Gateway（Bonjour/mDNS）
+    openclaw gateway discover
 
-# 查看Gateway是否可达
-openclaw status
-```
+    # 调用Gateway RPC方法
+    openclaw gateway call <method>
 
-### A.1.5 对话管理
+    # 打开控制面板（Web UI）
+    openclaw dashboard
 
-```bash
-# 发送消息
-openclaw agent --message "你好"
-openclaw message send "你好"
+## A.4 状态与诊断
 
-# 查看对话历史
-openclaw conversation list
+    # 查看整体运行状态
+    openclaw status
 
-# 清空对话历史
-openclaw conversation clear
-```
+    # 健康检查
+    openclaw health
 
-### A.1.6 通道管理
+    # 综合诊断与修复建议
+    openclaw doctor
 
-```bash
-# 列出已登录通道（WhatsApp/Telegram等）
-openclaw channels list
+    # 自动执行修复
+    openclaw doctor --yes
 
-# 登录新的通道账号（扫描/授权链接）
-openclaw channels login
+    # 非交互模式诊断
+    openclaw doctor --non-interactive
 
-# 查看通道状态
-openclaw channels status
-```
+    # 深度扫描（检查系统服务等）
+    openclaw doctor --deep
 
-### A.1.7 日志管理
+    # 启动TUI终端界面
+    openclaw tui
 
-```bash
-# 显示日志
-openclaw logs
+    # 搜索官方文档
+    openclaw docs <关键词>
 
-# 实时跟踪日志
-openclaw logs --follow
+## A.5 通道管理（channels）
 
-# JSON格式日志
-openclaw logs --json
+    # 列出已配置的通道
+    openclaw channels list
 
-# 纯文本日志
-openclaw logs --plain
+    # 查看通道状态（含连接健康检查）
+    openclaw channels status
 
-# 限制日志行数
-openclaw logs --limit 100
-```
+    # 通道状态（附加探测）
+    openclaw channels status --probe
 
-# 清理旧对话（保留最近N条）
-openclaw conversation clean --keep 20
+    # 添加通道
+    openclaw channels add <channel>
 
-# 导出对话历史
-openclaw conversation export > conversation.json
+    # 移除通道
+    openclaw channels remove <channel>
 
-# 导入对话历史
-openclaw conversation import conversation.json
-```
+    # 通道登录
+    openclaw channels login <channel>
 
----
+    # 通道登出
+    openclaw channels logout <channel>
 
-## A.2 文件操作命令
+    # 配对管理（WhatsApp/Telegram DM配对）
+    openclaw pairing list <channel>
+    openclaw pairing approve <channel> <code>
 
-### A.2.1 文件搜索
+## A.6 模型管理（models）
 
-```bash
-# 搜索文件（按名称）
-"帮我找一下名为'报告.pdf'的文件"
+    # 列出已配置的模型
+    openclaw models list
 
-# 搜索文件（按内容）
-"帮我找一下包含'OpenClaw'的文件"
+    # 查看模型状态
+    openclaw models status
 
-# 搜索文件（按类型）
-"帮我找一下所有的PDF文件"
+    # 切换默认模型
+    openclaw models set <model>
+    openclaw models set anthropic/claude-sonnet-4-5
 
-# 搜索文件（按时间）
-"帮我找一下最近7天修改的文件"
+    # 设置图片模型
+    openclaw models set-image <model>
 
-# 搜索文件（按大小）
-"帮我找一下大于100MB的文件"
+    # 添加认证（API Key / OAuth / setup-token）
+    openclaw models auth add
 
-# 组合搜索
-"帮我找一下最近7天修改的、包含'OpenClaw'的PDF文件"
-```
+    # 模型别名管理
+    openclaw models aliases list
+    openclaw models aliases add <alias> <model>
+    openclaw models aliases remove <alias>
 
-### A.2.2 文件处理
+    # 备用模型管理
+    openclaw models fallbacks list
+    openclaw models fallbacks add <model>
+    openclaw models fallbacks remove <model>
+    openclaw models fallbacks clear
 
-```bash
-# 读取文件
-"帮我读一下这个文件：~/Documents/report.pdf"
+    # 图片模型备用
+    openclaw models image-fallbacks list
+    openclaw models image-fallbacks add <model>
+    openclaw models image-fallbacks remove <model>
 
-# 总结文件
-"帮我总结一下这个文件：~/Documents/report.pdf"
+    # 扫描可用模型
+    openclaw models scan
 
-# 提取信息
-"帮我从这个文件中提取所有的日期和金额：~/Documents/invoice.pdf"
+    # 认证优先级
+    openclaw models auth order get
+    openclaw models auth order set <providers...>
 
-# 转换格式
-"帮我把这个Word文档转成PDF：~/Documents/report.docx"
+## A.7 Skills管理
 
-# 合并文件
-"帮我把这个文件夹里的所有PDF合并成一个：~/Documents/reports/"
+> ⚠️ Skills的安装/卸载/更新通过 `clawhub` CLI 完成，而非 `openclaw skills` 命令。
 
-# 压缩文件
-"帮我把这个文件夹压缩成zip：~/Documents/project/"
-```
+### openclaw skills（查看与检查）
 
-### A.2.3 文件整理
+    # 列出所有Skills（内置+工作区+托管）
+    openclaw skills list
 
-```bash
-# 批量重命名
-"帮我把这个文件夹里的所有文件，按照'日期-文件名'的格式重命名"
+    # 仅列出符合条件可加载的Skills
+    openclaw skills list --eligible
 
-# 按类型分类
-"帮我把桌面上的文件按类型分类到不同的文件夹"
+    # 查看Skills详情
+    openclaw skills info <skill-name>
 
-# 按日期分类
-"帮我把这个文件夹里的文件按月份分类"
+    # 检查Skills依赖是否满足
+    openclaw skills check
 
-# 删除重复文件
-"帮我找出并删除这个文件夹里的重复文件"
+### clawhub（安装/卸载/更新/搜索）
 
-# 清理临时文件
-"帮我清理系统临时文件"
+    # 全局安装ClawHub CLI
+    npm install -g clawhub
 
-# 整理下载文件夹
-"帮我整理下载文件夹，按类型分类"
-```
+    # 搜索Skills
+    clawhub search <关键词>
+    clawhub search browser
+    clawhub search --sort downloads
 
----
+    # 安装Skills
+    clawhub install <slug>
+    clawhub install brave-search
 
-## A.3 系统操作命令
+    # 安装到指定目录
+    clawhub install <slug> --dir /path/to/skills
 
-### A.3.1 应用程序控制
+    # 查看Skills详情（不安装）
+    clawhub inspect <slug>
 
-```bash
-# 打开应用
-"帮我打开Chrome"
-"帮我打开微信"
+    # 列出已安装Skills
+    clawhub list
 
-# 关闭应用
-"帮我关闭Chrome"
+    # 更新单个Skills
+    clawhub update <slug>
 
-# 切换应用
-"帮我切换到Chrome"
+    # 更新所有Skills
+    clawhub update --all
 
-# 查看运行的应用
-"帮我看一下现在运行了哪些应用"
+    # 卸载Skills
+    clawhub uninstall <slug>
 
-# 强制退出应用
-"帮我强制退出Chrome"
-```
+    # 同步Skills
+    clawhub sync
 
-### A.3.2 系统信息
+## A.8 插件管理（plugins）
 
-```bash
-# 查看系统信息
-"帮我看一下系统信息"
+    # 列出插件
+    openclaw plugins list
 
-# 查看CPU使用率
-"帮我看一下CPU使用率"
+    # 查看插件详情
+    openclaw plugins info <id>
 
-# 查看内存使用
-"帮我看一下内存使用情况"
+    # 安装插件
+    openclaw plugins install <id>
 
-# 查看硬盘空间
-"帮我看一下硬盘空间"
+    # 启用插件（需重启Gateway）
+    openclaw plugins enable <id>
 
-# 查看网络状态
-"帮我看一下网络连接状态"
+    # 禁用插件
+    openclaw plugins disable <id>
 
-# 查看电池状态（笔记本）
-"帮我看一下电池状态"
-```
+    # 插件诊断
+    openclaw plugins doctor
 
-### A.3.3 截图与录屏
+## A.9 日志与会话
 
-```bash
-# 截取全屏
-"帮我截个全屏"
+    # 查看日志
+    openclaw logs
 
-# 截取窗口
-"帮我截取Chrome窗口"
+    # 实时跟踪日志
+    openclaw logs --follow
 
-# 截取区域
-"帮我截取屏幕左上角的区域"
+    # JSON格式日志
+    openclaw logs --json
 
-# 延迟截图
-"帮我5秒后截个图"
+    # 纯文本日志
+    openclaw logs --plain
 
-# 录制屏幕
-"帮我录制屏幕"
+    # 限制日志行数
+    openclaw logs --limit 100
 
-# 停止录制
-"帮我停止录制"
-```
+    # 查看会话信息
+    openclaw sessions
 
----
+## A.10 定时任务（cron）
 
-## A.4 Skills管理命令
+    # 添加一次性定时任务
+    openclaw cron add \
+      --name "发送提醒" \
+      --at "2026-03-15T18:00:00Z" \
+      --session main \
+      --system-event "提醒：提交费用报告"
 
-### A.4.1 Skills安装
+    # 添加循环定时任务
+    openclaw cron add \
+      --name "早间状态" \
+      --cron "0 7 * * *" \
+      --tz "Asia/Shanghai" \
+      --session isolated \
+      --message "总结今天的收件箱和日历" \
+      --deliver \
+      --channel whatsapp
 
-```bash
-# 列出可用Skills
-openclaw skills list
+    # 列出定时任务
+    openclaw cron list
 
-# 查看技能详情
-openclaw skills info <skill>
+    # 删除定时任务
+    openclaw cron remove <job-id>
 
-# 搜索Skills
-openclaw skills search "文件管理"
+## A.11 消息发送（message）
 
-# 安装Skills
-clawhub install peekaboo
-clawhub install @openclaw/feishu
+    # 发送消息
+    openclaw message send --channel <channel> --target <target> "消息内容"
 
-# 安装指定版本
-clawhub install peekaboo@1.0.0
+    # 发送投票
+    openclaw message poll --channel discord --target channel:123 \
+      --poll-question "今晚吃什么？" --poll-option 火锅 --poll-option 烧烤
 
-# 从URL安装
-clawhub install https://github.com/user/skill.git
+    # 其他消息操作
+    openclaw message react
+    openclaw message edit
+    openclaw message delete
+    openclaw message pin
+    openclaw message search
 
-# 从本地安装
-clawhub install ./my-skill/
-```
+    # 运行单次Agent对话
+    openclaw agent --message "你好"
 
-### A.4.2 Skills管理
+## A.12 安全与备份
 
-```bash
-# 查看已安装Skills
-openclaw skills list --installed
+    # 安全审计
+    openclaw security audit
 
-# 查看Skills详情
-openclaw skills info peekaboo
+    # 深度安全审计
+    openclaw security audit --deep
 
-# 更新Skills
-openclaw skills update peekaboo
+    # 创建备份
+    openclaw backup create
 
-# 更新所有Skills
-openclaw skills update --all
+    # 仅备份配置
+    openclaw backup create --only-config
 
-# 卸载Skills
-openclaw skills uninstall peekaboo
+    # 校验备份
+    openclaw backup verify <backup-id或路径>
 
-# 启用Skills
-openclaw skills enable peekaboo
+    # 列出备份
+    openclaw backup list
 
-# 禁用Skills
-openclaw skills disable peekaboo
-```
+    # 恢复备份
+    openclaw backup restore <文件路径>
 
-### A.4.3 Skills配置
+    # 管理密钥
+    openclaw secrets
 
-```bash
-# 查看Skills配置
-openclaw skills config peekaboo
+## A.13 重置与卸载
 
-# 设置Skills配置
-openclaw skills config peekaboo --set key=value
+    # 重置（配置+凭据+会话）
+    openclaw reset
 
-# 重置Skills配置
-openclaw skills config peekaboo --reset
+    # 卸载
+    openclaw uninstall
 
-# 导出Skills配置
-openclaw skills config peekaboo --export > peekaboo-config.json
+    # 全自动卸载
+    openclaw uninstall --all --yes --non-interactive
 
-# 导入Skills配置
-openclaw skills config peekaboo --import peekaboo-config.json
-```
+    # 模拟卸载（仅显示结果）
+    openclaw uninstall --dry-run
 
----
+    # 软件更新
+    openclaw update
 
-## A.5 高级命令
+    # 查看更新状态
+    openclaw update status
 
-### A.5.1 模型管理
+    # 更新到指定版本
+    openclaw update --tag <版本号>
 
-```bash
-# 列出可用模型
-openclaw models list
+    # 更新到指定通道
+    openclaw update --channel stable
+    openclaw update --channel beta
 
-# 列出已配置模型
-openclaw models list --configured
-
-# 添加模型
-openclaw models add \
-  --provider anthropic \
-  --name claude-sonnet-4 \
-  --apiKey sk-xxx
-
-# 删除模型
-openclaw models remove claude-sonnet-4
-
-# 设置默认模型
-openclaw models set-default claude-sonnet-4
-
-# 测试模型连接
-openclaw models test claude-sonnet-4
-
-# 查看模型使用统计
-openclaw models stats
-```
-
-### A.5.2 插件管理
-
-```bash
-# 列出插件
-openclaw plugins list
-
-# 安装插件
-openclaw plugins install <id>
-openclaw plugins install @openclaw/voice-call
-
-# 启用插件（需要重启网关）
-openclaw plugins enable <id>
-
-# 禁用插件
-openclaw plugins disable <id>
-
-# 卸载插件
-openclaw plugins uninstall <id>
-
-# 查看插件详情
-openclaw plugins info <id>
-```
-
-### A.5.3 卸载命令
-
-```bash
-# 官方推荐卸载方式
-openclaw uninstall
-
-# 全自动卸载（包含状态、workspace、插件等）
-openclaw uninstall --all --yes --non-interactive
-
-# 仅删除状态文件（不删除workspace/CLI）
-openclaw uninstall --state
-
-# 仅删除工作区（移除agent/workspace文件）
-openclaw uninstall --workspace
-
-# 仅卸载服务（不删除数据）
-openclaw uninstall --service
-
-# 模拟卸载（显示结果但不实际执行）
-openclaw uninstall --dry-run
-```
-
-### A.5.4 日志管理
-
-```bash
-# 查看日志
-openclaw logs
-
-# 查看最近N行日志
-openclaw logs --tail 100
-
-# 实时查看日志
-openclaw logs --follow
-
-# 查看错误日志
-openclaw logs --level error
-
-# 清空日志
-openclaw logs clear
-
-# 导出日志
-openclaw logs export > logs.txt
-```
-
-### A.5.5 性能优化
-
-```bash
-# 清理缓存
-openclaw cache clear
-
-# 查看缓存大小
-openclaw cache size
-
-# 优化数据库
-openclaw db optimize
-
-# 重建索引
-openclaw db reindex
-
-# 检查健康状态
-openclaw health check
-
-# 性能诊断
-openclaw diagnose
-```
-
-### A.5.4 备份与恢复
-
-```bash
-# 备份配置
-openclaw backup create
-
-# 校验备份（2026.3.8+）
-openclaw backup verify <backup-id或文件路径>
-
-# 仅备份配置（2026.3.8+）
-openclaw backup create --only-config
-
-# 备份但不包含workspace（2026.3.8+）
-openclaw backup create --no-include-workspace
-
-# 列出备份
-openclaw backup list
-
-# 恢复备份
-openclaw backup restore backup-20260210.tar.gz
-
-# 删除备份
-openclaw backup delete backup-20260210.tar.gz
-
-# 自动备份设置
-openclaw backup auto --enable
-openclaw backup auto --disable
-```
-
----
-
-## 📝 常用命令组合
+## A.14 常用场景组合
 
 ### 场景1：初次安装后的配置
 
-```bash
-# 1. 配置API Key
-openclaw config set model.apiKey "sk-xxx"
+    # 1. 运行引导向导
+    openclaw onboard
 
-# 2. 设置默认模型
-openclaw config set model.name "claude-sonnet-4"
+    # 2. 安装守护进程
+    openclaw daemon install
 
-# 3. 启用自动清理
-openclaw config set conversation.autoClean true
+    # 3. 启动
+    openclaw daemon start
 
-# 4. 重启Gateway
-openclaw gateway restart
-
-# 5. 测试连接
-openclaw agent --message "你好"
-```
+    # 4. 打开控制面板
+    openclaw dashboard
 
 ### 场景2：切换模型
 
-```bash
-# 1. 查看可用模型
-openclaw models list
+    # 1. 查看可用模型
+    openclaw models list
 
-# 2. 切换模型
-openclaw config set model.name "deepseek-chat"
+    # 2. 切换模型
+    openclaw models set anthropic/claude-sonnet-4-5
 
-# 3. 重启Gateway
-openclaw gateway restart
-
-# 4. 测试新模型
-openclaw agent --message "测试"
-```
+    # 3. 重启守护进程
+    openclaw daemon restart
 
 ### 场景3：安装新Skills
 
-```bash
-# 1. 搜索Skills
-openclaw skills search "截图"
+    # 1. 搜索Skills
+    clawhub search 截图
 
-# 2. 安装Skills
-clawhub install peekaboo
+    # 2. 安装Skills
+    clawhub install peekaboo
 
-# 3. 查看Skills配置
-openclaw skills config peekaboo
+    # 3. 确认已安装
+    openclaw skills list
 
-# 4. 重启Gateway
-openclaw gateway restart
+    # 4. 重启守护进程
+    openclaw daemon restart
 
-# 5. 测试Skills
-"帮我截个图"
-```
+### 场景4：故障排查
 
-### 场景4：性能优化
+    # 1. 查看运行状态
+    openclaw status
 
-```bash
-# 1. 清理对话历史
-openclaw conversation clean --keep 20
+    # 2. 综合诊断
+    openclaw doctor
 
-# 2. 清理缓存
-openclaw cache clear
+    # 3. 查看日志
+    openclaw logs --follow
 
-# 3. 优化数据库
-openclaw db optimize
+    # 4. Gateway健康检查
+    openclaw gateway health
 
-# 4. 重启Gateway
-openclaw gateway restart
+    # 5. 安全审计
+    openclaw security audit
 
-# 5. 检查性能
-openclaw health check
-```
+## A.15 配置文件路径
 
-### 场景5：故障排查
+    # 查看配置文件路径
+    openclaw config file
 
-```bash
-# 1. 查看运行状态
-openclaw status
+    # 主配置文件（默认位置）
+    ~/.openclaw/openclaw.json
 
-# 2. 查看日志
-openclaw logs --tail 100
+    # Skills目录（工作区级）
+    <workspace>/skills/
 
-# 3. 检查配置
-openclaw config list
+    # Skills目录（全局级）
+    ~/.openclaw/skills/
 
-# 4. 测试模型连接
-openclaw models test
+    # 人设文件
+    ~/clawd/SOUL.md
+    ~/clawd/USER.md
+    ~/clawd/AGENTS.md
 
-# 5. 性能诊断
-openclaw diagnose
-```
-
----
-
-## 🔧 配置文件路径
-
-```bash
-# 主配置文件
-~/.openclaw/openclaw.json
-
-# Skills目录
-~/.openclaw/extensions/
-
-# 日志目录
-~/.openclaw/logs/
-
-# 缓存目录
-~/.openclaw/cache/
-
-# 备份目录
-~/.openclaw/backups/
-
-# 对话历史
-~/.openclaw/conversations/
-```
-
----
-
-## 💡 使用技巧
-
-### 技巧1：使用别名
-
-```bash
-# 在 ~/.zshrc 或 ~/.bashrc 中添加
-alias oc="openclaw"
-alias ocg="openclaw gateway"
-alias occ="openclaw config"
-alias ocs="openclaw skills"
-
-# 使用别名
-oc chat "你好"
-ocg restart
-occ get model.name
-ocs list
-```
-
-### 技巧2：使用管道
-
-```bash
-# 从文件读取内容发送
-cat report.txt | openclaw agent --message
-
-# 保存输出到文件
-openclaw agent --message "总结一下OpenClaw的优势" > summary.txt
-
-# 组合使用
-cat input.txt | openclaw agent --message | tee output.txt
-```
-
-### 技巧3：使用环境变量
-
-```bash
-# 设置环境变量
-export OPENCLAW_API_KEY="sk-xxx"
-export OPENCLAW_MODEL="claude-sonnet-4"
-
-# OpenClaw会自动读取这些环境变量
-openclaw start
-```
-
-### 技巧4：批量操作
-
-```bash
-# 批量安装Skills
-for skill in peekaboo feishu telegram; do
-  clawhub install $skill
-done
-
-# 批量更新Skills
-openclaw skills list --installed | xargs -I {} openclaw skills update {}
-
-# 批量测试模型
-openclaw models list | xargs -I {} openclaw models test {}
-```
-
----
+    # 记忆目录
+    ~/clawd/memory/
 
 ## 📚 相关资源
 
-- OpenClaw官方文档：https://docs.openclaw.ai/
-- 命令行参考：https://docs.openclaw.ai/cli
-- Skills市场：https://hub.openclaw.ai/
-- 社区论坛：https://community.openclaw.ai/
+-   OpenClaw CLI完整参考：https://docs.openclaw.ai/cli
+-   ClawHub CLI文档：https://docs.openclaw.ai/tools/clawhub
+-   配置参考：https://docs.openclaw.ai/gateway/configuration
 
----
-
-**提示**：本速查表会随OpenClaw版本更新而更新，建议收藏本页面以便随时查阅。
-
-
-### A.X ACP 溯源与回执（2026.3.8+）
-
-```bash
-# 为 ACP 会话注入溯源元数据（可选）
-openclaw acp --provenance meta
-
-# 注入溯源元数据 + 可见回执（用于审计/追踪）
-openclaw acp --provenance meta+receipt
-
-#关闭溯源（默认行为可能随版本变化，以官方为准）
-openclaw acp --provenance off
-```
-
-
----
-
-## 🌐 在线阅读
-
-📖 **想在线阅读此附录？**
-
-[🔗 在线阅读此附录](https://awesome.tryopenclaw.asia/appendix/A-command-reference/)
-
-访问网站获取更好的阅读体验：
-- 📱 响应式设计，支持手机、平板、电脑
-- 🌙 支持黑暗模式，保护眼睛
-- 🔍 内置搜索功能，快速定位内容
-- 📋 目录导航，轻松跳转章节
-
-[🏠 访问完整教程网站](https://awesome.tryopenclaw.asia)
+**提示**：本速查表基于v2026.3.7+版本验证。命令可能随版本更新而变化，遇到报错请先运行 `openclaw update` 更新到最新版本，或查阅官方文档。
