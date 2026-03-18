@@ -2,6 +2,24 @@
 
 > 💡 **本章节目标**：探索OpenClaw在创意领域的应用，包括AI绘画工作流、视频脚本生成、多语言翻译和数据分析自动化。
 
+---
+
+## ⚠️ 重要提示
+
+**本章节及后续章节（第10-15章）存在以下已知问题**：
+- 部分Skills名称或安装方式已变更，可能导致找不到技能
+- 部分配置参数名称已修改，可能导致配置失败
+
+**解决方案**：
+- 📖 **推荐购买纸质书**：《OpenClaw超级个体实操手册》（清华大学出版社，2026年3月底上市）
+  - 144条CLI命令已逐条核对验证
+  - 9套配置模板全部在实际环境跑通
+  - ⭐ [Star本仓库](https://github.com/xianyu110/awesome-openclaw-tutorial)第一时间获取上市通知
+- 🔍 **查阅官方文档**：https://docs.openclaw.ai
+- 💬 **提交Issue**：https://github.com/xianyu110/awesome-openclaw-tutorial/issues
+
+---
+
 ## 🎯 本章节内内容
 
 - 14.1 AI绘画工作流
