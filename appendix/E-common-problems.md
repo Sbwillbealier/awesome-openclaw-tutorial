@@ -23,7 +23,7 @@
 
 1. **检查Node.js版本**
 ```bash
-node --version  # 需要v18.0.0或更高版本
+node --version  # 需要v22.14.0或更高版本（macOS 需要 v22.16.0+）
 ```
 
 2. **使用官方中文安装脚本**
@@ -77,6 +77,60 @@ npm config set https-proxy http://proxy-server:port
 # 下载安装包后本地安装
 npm install -g ./openclaw-*.tgz
 ```
+
+### Q4: WSL/Linux 安装后提示缺少 UI 资产怎么办？（v2026.3.22 已知问题）
+
+**症状**：通过 `npm install -g openclaw` 安装后启动时报错：
+
+```
+Missing Control UI assets. You can build them yourself with: pnpm ui:build
+```
+
+或执行 `pnpm ui:build` 时又报错：
+
+```
+Cannot find module '.../scripts/ui.js'
+```
+
+**原因**：`openclaw@2026.3.22` 的 npm 包打包时遗漏了 `scripts/ui.js` 和预构建的 UI 资产文件，**不是用户操作问题**。
+
+**解决方案**：
+
+**方法一：升级到最新版（推荐）**
+
+```bash
+npm install -g openclaw@latest
+openclaw --version  # 确认版本为 2026.3.24 或更新
+```
+
+**方法二：确认 Node 版本是否符合要求**
+
+```bash
+node --version
+# Linux/WSL 需要 >= 22.14.0
+# macOS 需要 >= 22.16.0
+```
+
+如果版本不符合，先升级 Node：
+
+```bash
+# 使用 nvm 升级
+nvm install 22
+nvm use 22
+npm install -g openclaw@latest
+```
+
+**方法三：仍报错则从源码构建（临时方案）**
+
+```bash
+git clone https://github.com/openclaw/openclaw.git
+cd openclaw
+pnpm install
+pnpm ui:build
+pnpm build
+```
+
+> ⚠️ **注意**：WSL 环境下建议优先使用方法一，升级到 v2026.3.24+ 后该问题已修复。
 
 ---
 
@@ -445,5 +499,5 @@ openclaw session prune --days 30
 
 ---
 
-**最后更新**：2026年3月16日
-**适用版本**：OpenClaw v2026.3.7+
+**最后更新**：2026年3月27日
+**适用版本**：OpenClaw v2026.3.7+（Q4 适用 v2026.3.22+）

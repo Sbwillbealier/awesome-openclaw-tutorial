@@ -169,6 +169,8 @@ openclaw update
 # 关注GitHub Release: https://github.com/openclaw/openclaw/releases
 ```
 
+> ⚠️ **v2026.3.24 升级注意事项**：详见本附录末尾「版本升级避坑」章节。
+
 ---
 
 ### 错误7：不备份配置
@@ -950,6 +952,78 @@ if (!await fileExists('report.txt')) {
 
 ---
 
+## 🚀 版本升级避坑
+
+### v2026.3.24 升级注意事项（2026年3月）
+
+> 这是目前最新稳定版，包含重要安全修复，建议所有用户升级。
+
+**升级前必读**：
+
+#### ⚠️ Node.js 版本要求已提升
+
+v2026.3.24 对 Node.js 最低版本要求做了调整：
+
+| 系统 | 最低要求 |
+|------|---------|
+| macOS | >= 22.16.0 |
+| Linux / WSL | >= 22.14.0 |
+| Windows | >= 22.14.0 |
+
+**升级前请先检查**：
+```bash
+node --version
+```
+
+如果版本不满足，先升级 Node：
+```bash
+# 使用 nvm（推荐）
+nvm install 22
+nvm use 22
+nvm alias default 22
+
+# 验证
+node --version
+```
+
+#### 升级步骤
+
+```bash
+# 第一步：升级 OpenClaw
+npm install -g openclaw@latest
+
+# 第二步：确认版本
+openclaw --version  # 应显示 2026.3.24
+
+# 第三步：重启 Gateway
+openclaw gateway restart
+
+# 第四步：验证正常运行
+openclaw status
+```
+
+#### 已知问题与修复
+
+| 问题 | 受影响版本 | 状态 |
+|------|-----------|------|
+| WSL/Linux 安装后缺少 UI 资产（`scripts/ui.js` 缺失） | v2026.3.22 | ✅ 升级到 v2026.3.24 修复 |
+| Windows gateway 重启时弹出控制台黑窗口 | v2026.3.12 及以前 | ✅ v2026.3.13 已修复 |
+| Dashboard 工具密集型运行时 UI 卡死 | v2026.3.12 及以前 | ✅ v2026.3.13 已修复 |
+| setup code 可被重放攻击 | v2026.3.12 及以前 | ✅ v2026.3.13 已修复 |
+
+#### v2026.3.12 重要安全修复（如从更早版本升级请注意）
+
+v2026.3.12 修复了多个高危安全漏洞，**强烈建议**跨版本升级时了解：
+
+- 跨站 WebSocket 劫持路径已修复
+- workspace plugin 隐式自动加载（恶意代码执行风险）已修复
+- `/config`、`/debug` 接口权限绕过已修复
+- 共享 token 范围自我提权已修复
+
+如果你长期未升级（仍在使用 v2026.3.7 或更早版本），建议直接升级到最新版并重新审查配置。
+
+---
+
 ## 📚 相关资源
 
 - [第16章：常见问题速查](16-common-problems.md)
@@ -958,7 +1032,7 @@ if (!await fileExists('report.txt')) {
 
 ---
 
-**最后更新**：2026年2月14日
+**最后更新**：2026年3月27日
 
 
 ---
