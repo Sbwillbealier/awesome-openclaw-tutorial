@@ -104,7 +104,7 @@
 
 | 章节 | 文件路径 | 状态 | 备注 |
 |------|---------|------|------|
-| 第1章 | docs/01-basics/01-introduction.md | ✅ 存在 | - |
+| 第1章 | ../docs/01-basics/01-introduction.md | ✅ 存在 | - |
 | 第2章 | docs/01-basics/02-installation.md | ✅ 存在 | - |
 | 第3章 | docs/01-basics/03-quick-start.md | ✅ 存在 | - |
 
@@ -269,12 +269,12 @@ markdown-link-check README.md
 **示例**：
 ```markdown
 <!-- ✅ 正确 -->
-[第1章](docs/01-basics/01-introduction.md)
+[第1章](../docs/01-basics/01-introduction.md)
 [安装配置](#安装配置问题)
 
 <!-- ❌ 错误 -->
 [第1章](/docs/01-basics/01-introduction)  <!-- 缺少.md -->
-[第1章](../01-basics/01-introduction.md)  <!-- 路径错误 -->
+[第1章](../docs/01-basics/01-introduction.md)  <!-- 路径错误 -->
 ```
 
 ### 3. 图片链接

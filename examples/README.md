@@ -216,9 +216,9 @@ openclaw gateway restart
 ## 📚 更多资源
 
 - [OpenClaw官方文档](https://docs.openclaw.ai)
-- [Skill开发指南](docs/03-advanced/08-skills-extension.md)
-- [配置文件完整指南](appendix/L-config-file-structure.md)
-- [常见问题](appendix/E-common-problems.md)
+- [Skill开发指南](../docs/03-advanced/08-skills-extension.md)
+- [配置文件完整指南](../appendix/L-config-file-structure.md)
+- [常见问题](../appendix/E-common-problems.md)
 
 ## 💡 贡献
 

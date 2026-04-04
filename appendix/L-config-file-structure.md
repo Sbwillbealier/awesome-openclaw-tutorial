@@ -107,10 +107,10 @@ nano ~/.openclaw/openclaw.json
 **查看命令**:
 ```bash
 # 查看 Agent 配置
-openclaw config get --agent tech-dev
+openclaw config get agents.tech-dev
 
 # 设置 Agent 配置
-openclaw config set models.default "openai/gpt-4" --agent tech-dev
+openclaw config set agents.tech-dev.models.default "openai/gpt-4"
 
 # 编辑配置文件
 nano ~/.openclaw/agents/tech-dev/openclaw.json
@@ -236,10 +236,10 @@ export ANTHROPIC_API_KEY="sk-ant-env"
 
 ```bash
 # 查看全局配置文件路径
-openclaw config path
+echo ~/.openclaw/openclaw.json
 
 # 查看 Agent 配置文件路径
-openclaw config path --agent tech-dev
+echo ~/.openclaw/agents/tech-dev/openclaw.json
 ```text
 ### 查看配置内容
 
@@ -251,7 +251,7 @@ openclaw config get
 openclaw config get models.providers.anthropic.apiKey
 
 # 查看 Agent 配置
-openclaw config get --agent tech-dev
+openclaw config get agents.tech-dev
 
 # 以 JSON 格式输出
 openclaw config get --json
@@ -279,7 +279,7 @@ openclaw agents list
 openclaw config set models.default "anthropic/claude-sonnet-4-5"
 
 # 设置 Agent 配置
-openclaw config set models.default "openai/gpt-4" --agent tech-dev
+openclaw config set agents.tech-dev.models.default "openai/gpt-4"
 
 # 设置 API Key
 openclaw config set models.providers.anthropic.apiKey "sk-ant-xxx"
@@ -291,16 +291,16 @@ openclaw config set models.providers.anthropic.apiKey "sk-ant-xxx"
 openclaw config unset models.providers.anthropic.apiKey
 
 # 删除 Agent 配置
-openclaw config unset models.default --agent tech-dev
+openclaw config unset agents.tech-dev.models.default
 ```text
 ### 重置配置
 
 ```bash
 # 重置全局配置
-openclaw config reset
+openclaw reset
 
 # 重置 Agent 配置
-openclaw config reset --agent tech-dev
+openclaw reset --scope config
 ```text
 ---
 
@@ -327,8 +327,8 @@ openclaw config set models.providers.anthropic.apiKey "sk-ant-xxx"
 **配置方式**:
 ```bash
 # 为每个 Agent 单独配置
-openclaw config set models.providers.anthropic.apiKey "sk-ant-xxx" --agent tech-dev
-openclaw config set models.providers.openai.apiKey "sk-yyy" --agent content-writer
+openclaw config set agents.tech-dev.models.providers.anthropic.apiKey "sk-ant-xxx"
+openclaw config set agents.content-writer.models.providers.openai.apiKey "sk-yyy"
 ```text
 **优点**:
 - ✅ 每个 Agent 独立配置
@@ -383,7 +383,7 @@ source ~/.zshrc
 
 3. **查看日志**
    ```bash
-   openclaw logs --tail 50
+   openclaw logs --limit 50
    ```
 
 ---
@@ -426,8 +426,8 @@ source ~/.zshrc
 2. **查看每个 Agent 的配置**
 
    ```bash
-   openclaw config get --agent main-assistant
-   openclaw config get --agent tech-dev
+   openclaw config get agents.main-assistant
+   openclaw config get agents.tech-dev
    ```
 
 3. **统一管理**
@@ -498,8 +498,8 @@ source ~/.zshrc
 
 ## 🔗 相关文档
 
-- [第2章：安装配置](01-basics/02-installation.md) - 基础配置教程
-- [第11章：高级配置](03-advanced/11-advanced-configuration.md) - 高级配置技巧
+- [第2章：安装配置](../docs/01-basics/02-installation.md) - 基础配置教程
+- [第11章：高级配置](../docs/03-advanced/11-advanced-configuration.md) - 高级配置技巧
 - [配置文件模板](../appendix/H-config-templates.md) - 更多配置模板
 
 ---

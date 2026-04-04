@@ -406,7 +406,7 @@ A：完成7天学习后，你将能够：
 **Q4：学习过程中遇到问题怎么办？**
 
 A：多种解决方案：
-- 查看[常见问题](docs/05-troubleshooting/16-common-problems.md)
+- 查看[常见问题](appendix/E-common-problems.md)
 - 搜索[GitHub Discussions](https://github.com/xianyu110/awesome-openclaw-tutorial/discussions)
 - 提交[Issue](https://github.com/xianyu110/awesome-openclaw-tutorial/issues)
 

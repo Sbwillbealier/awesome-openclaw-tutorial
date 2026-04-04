@@ -807,7 +807,7 @@ openclaw config set agents.defaults.model.primary "maynor/claude-haiku-4-5-20251
 # 重启生效
 openclaw gateway restart
 > 📚 **想了解更多？**  
-> 详细的模型对比、多模型切换策略、成本优化方案，请参考 [第10章节：高级配置](../03-advanced/10-advanced-configuration.md)。
+> 详细的模型对比、多模型切换策略、成本优化方案，请参考 [第10章节：高级配置](../03-advanced/11-advanced-configuration.md)。
 
 ## 3.5 Gateway 网关配置（进阶）
 

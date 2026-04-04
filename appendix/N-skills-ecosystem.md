@@ -209,7 +209,7 @@ clawhub install community/skill-name
 
 ### Top 20 必装 Skills
 
-详见 [第8章：Skills扩展](../../docs/03-advanced/08-skills-extension.md)
+详见 [第8章：Skills扩展](../docs/03-advanced/08-skills-extension.md)
 
 ### 新手推荐
 
@@ -248,7 +248,7 @@ clawhub install community/skill-name
 
 ### 安全注意事项
 
-**重要**: 2026年1月发生了 [ClawHavoc 供应链攻击事件](../../docs/03-advanced/99-security-guide.md#clawhavoc供应链攻击)，ClawHub 约20%的 Skills 被确认为恶意。
+**重要**: 2026年1月发生了 [ClawHavoc 供应链攻击事件](../docs/03-advanced/08-skills-extension.md#clawhavoc供应链攻击)，ClawHub 约20%的 Skills 被确认为恶意。
 
 - ✅ 安装前审查源码
 - ✅ 使用精选列表（如 awesome-openclaw-skills）
@@ -260,8 +260,8 @@ clawhub install community/skill-name
 
 ## 🔗 相关链接
 
-- [第8章：Skills扩展](../../docs/03-advanced/08-skills-extension.md) - 详细的 Skills 使用指南
-- [安全指南：Skills安全](../../docs/03-advanced/99-security-guide.md#skills安全) - Skills 安全最佳实践
+- [第8章：Skills扩展](../docs/03-advanced/08-skills-extension.md) - 详细的 Skills 使用指南
+- [安全指南：Skills安全](../docs/03-advanced/08-skills-extension.md#skills安全) - Skills 安全最佳实践
 - [ClawHub 市场](https://clawhub.com) - 官方 Skills 市场
 - [Skills.sh](https://skills.sh) - Vercel 出品的跨平台 Skills 生态
 - [SkillsMP](https://skillsmp.com) - 40万+ Agent Skills 市场

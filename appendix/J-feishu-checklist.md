@@ -118,7 +118,7 @@ openclaw gateway status
 
 ```bash
 # 测试飞书连接
-openclaw channels test feishu
+openclaw channels status --probe
 
 # 应该显示连接成功
 ```text
@@ -199,7 +199,7 @@ openclaw logs --follow
 openclaw logs --follow | grep feishu
 
 # 查看最近100行日志
-openclaw logs --tail 100
+openclaw logs --limit 100
 ```
 
 ### 常见错误及解决
@@ -216,8 +216,8 @@ openclaw logs --tail 100
 
 ## 📚 相关文档
 
-- [第9章：多平台集成](09-multi-platform-integration.md)
-- [附录E：常见问题速查](../../appendix/E-common-problems.md#问题14飞书bot不回复)
+- [第9章：多平台集成](../docs/03-advanced/09-multi-platform-integration.md)
+- [附录E：常见问题速查](E-common-problems.md#问题14飞书bot不回复)
 - [飞书开放平台文档](https://open.feishu.cn/document/)
 
 ---
