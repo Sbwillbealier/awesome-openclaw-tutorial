@@ -401,7 +401,35 @@ curl -X POST https://open.feishu.cn/open-apis/bot/v2/hook/xxx \
 3. **检查通讯附录权限**
 4. **参考第9章节配置步骤**
 
-### Q15: Telegram Bot无响应？
+### Q15: 能接入微信吗？
+
+**症状**：想在微信中使用 OpenClaw 智能体
+
+**解决方案**：
+
+OpenClaw 提供了**官方微信接入方案 ClawBot**（橙皮书 v1.4 新增）：
+
+1. **安装官方插件**：
+   ```bash
+   openclaw plugins install @openclaw/wechat-clawbot
+   ```
+
+2. **启用微信渠道**：
+   ```bash
+   openclaw config set channels.wechat.enabled true
+   ```
+
+3. **重启 Gateway**：
+   ```bash
+   openclaw gateway restart
+   ```
+
+**注意事项**：
+- ClawBot 基于 WeChatFerry，目前仅支持 Windows
+- **强烈建议使用小号**，有封号风险
+- 详见 [第9章 9.5 微信接入](../docs/03-advanced/09-multi-platform-integration.md)
+
+### Q16: Telegram Bot无响应？
 
 **症状**：Telegram Bot不回复消息
 
@@ -426,7 +454,7 @@ curl https://api.telegram.org/bot<TOKEN>/getWebhookInfo
 
 ## 性能访问题
 
-### Q16: 响应速度慢怎么怎么办？
+### Q17: 响应速度慢怎么怎么办？
 
 **解决方案**：
 
@@ -450,7 +478,7 @@ openclaw chat clear
 }
 ```
 
-### Q17: 内存占用过高？
+### Q18: 内存占用过高？
 
 **解决方案**：
 
@@ -469,7 +497,7 @@ openclaw daemon restart
 docker run -d --memory="2g" openclaw/openclaw
 ```
 
-### Q18: 磁盘空间不足？
+### Q19: 磁盘空间不足？
 
 **解决方案**：
 

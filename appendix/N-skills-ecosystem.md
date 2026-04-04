@@ -14,7 +14,7 @@
 **查看命令**:
 
 ```bash
-openclaw skills list --builtin
+openclaw skills list
 ```
 
 ---
@@ -28,6 +28,10 @@ openclaw skills list --builtin
 
 **说明**: ClawHub 是 OpenClaw 官方的 Skills 市场，提供经过官方审核和维护的高质量 Skills。
 
+**2026年3月新增插件**（橙皮书 v1.4）：
+
+- **@openclaw/wechat-clawbot**：官方微信接入插件，基于 WeChatFerry，一行命令即可将 OpenClaw 接入个人微信
+
 **访问方式**:
 ```bash
 # 搜索 Skills
@@ -35,6 +39,9 @@ clawhub search <关键词>
 
 # 安装 Skills
 clawhub install <skill-name>
+
+# 安装微信插件（v1.4 新增）
+openclaw plugins install @openclaw/wechat-clawbot
 
 # 查看已安装
 openclaw skills list
@@ -264,7 +271,7 @@ clawhub install community/skill-name
 
 ---
 
-**最后更新**: 2026年3月13日
+**最后更新**: 2026年4月4日
 **数据来源**: OpenClaw 官方统计、Skills.sh、SkillsMP、MCP 官方仓库
 
 
