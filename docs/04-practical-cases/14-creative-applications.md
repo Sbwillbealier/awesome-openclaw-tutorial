@@ -1,8 +1,8 @@
 > 📖 **纸质书《OpenClaw超级个体实操手册》已上市！** 全面重写+逐条验证，修复了线上教程的已知问题。🛒 [京东专属购买（¥42，原价¥59.8）](https://item.jd.com/14669463.html)
 
-# 第14章节 创意应用探索（AI绘画/视频/翻译/数据分析）
+# ~~第14章节 创意应用探索（AI绘画/视频/翻译/数据分析）~~
 
-> 💡 **本章节目标**：探索OpenClaw在创意领域的应用，包括AI绘画工作流、视频脚本生成、多语言翻译和数据分析自动化。
+> ~~💡 **本章节目标**：探索OpenClaw在创意领域的应用，包括AI绘画工作流、视频脚本生成、多语言翻译和数据分析自动化。~~
 
 ---
 
@@ -22,13 +22,13 @@
 
 ---
 
-## 🎯 本章节内内容
+## ~~🎯 本章节内内容~~
 
-- 14.1 AI绘画工作流
-- 14.2 视频脚本生成
-- 14.3 多语言翻译助手
-- 14.4 数据分析自动化
-- 14.5 多Agent头脑风暴
+- ~~14.1 AI绘画工作流~~
+- ~~14.2 视频脚本生成~~
+- ~~14.3 多语言翻译助手~~
+- ~~14.4 数据分析自动化~~
+- ~~14.5 多Agent头脑风暴~~
 
 ---
 
@@ -629,31 +629,31 @@ openclaw config set image.prompt-language "en"
 ```text
 ---
 
-## 14.2 视频脚本生成
+## ~~14.2 视频脚本生成~~
 
-### 14.2.1 场景描述
+### ~~14.2.1 场景描述~~
 
-**用户**：视频创作者、UP主、短视频运营
-**需求**：快速生成脚本、优化文案、批量生产
-**平台**：B站、抖音、快手、小红书
+~~**用户**：视频创作者、UP主、短视频运营~~
+~~**需求**：快速生成脚本、优化文案、批量生产~~
+~~**平台**：B站、抖音、快手、小红书~~
 
-**痛点**：
+~~**痛点**：~~
 ```
 ❌ 灵感枯竭：不知道拍什么
 ❌ 脚本耗时：写脚本要几小时
 ❌ 结构混乱：不知道怎么组织内内容
 ❌ 缺少亮点：内内容平淡无奇
 ```text
-**目标**：
+~~**目标**：~~
 ```
 ✅ 快速生成脚本
 ✅ 结构清晰完整
 ✅ 内内容有吸引力
 ✅ 批量生产内内容
 ```text
-### 14.2.2 短视频脚本生成
+### ~~14.2.2 短视频脚本生成~~
 
-**场景：生成抖音短视频脚本**
+~~**场景：生成抖音短视频脚本**~~
 
 ```
 你：帮我生成一个关于OpenClaw的抖音短视频脚本，
@@ -740,9 +740,9 @@ OpenClaw：好的，正在生成...
 📝 文案已保存
 🎬 脚本已导出为PDF
 ```text
-### 14.2.3 长视频脚本生成
+### ~~14.2.3 长视频脚本生成~~
 
-**场景：生成B站长视频脚本**
+~~**场景：生成B站长视频脚本**~~
 
 ```
 你：帮我生成一个B站视频脚本，
@@ -911,9 +911,9 @@ OpenClaw：好的，正在生成...
 🎬 脚本已导出为Word文档
 📊 已生成分镜头脚本
 ```text
-### 14.2.4 批量生成系列脚本
+### ~~14.2.4 批量生成系列脚本~~
 
-**场景：生成系列视频脚本**
+~~**场景：生成系列视频脚本**~~
 
 ```
 你：帮我生成一个OpenClaw系列教程的脚本大纲，
@@ -1051,11 +1051,11 @@ OpenClaw：好的，正在规划...
 
 需要我生成某一期的详细脚本吗？
 ```text
-### 14.2.5 更多视频创作Skills推荐
+### ~~14.2.5 更多视频创作Skills推荐~~
 
-根据ClawHub技能市场，以下是推荐的视频创作相关Skills：
+~~根据ClawHub技能市场，以下是推荐的视频创作相关Skills：~~
 
-**1. video-agent - HeyGen视频生成**
+~~**1. video-agent - HeyGen视频生成**~~
 ```bash
 # 安装
 npx clawhub@latest install video-agent
@@ -1065,7 +1065,7 @@ npx clawhub@latest install video-agent
 • 支持多种语言
 • 专业级视频质量
 ```text
-**2. sora-video-gen - OpenAI Sora**
+~~**2. sora-video-gen - OpenAI Sora**~~
 ```bash
 # 安装
 npx clawhub@latest install sora-video-gen
@@ -1075,7 +1075,7 @@ npx clawhub@latest install sora-video-gen
 • 文本生成视频
 • 高质量视频输出
 ```text
-**3. veo3-video-gen - Google Veo**
+~~**3. veo3-video-gen - Google Veo**~~
 ```bash
 # 安装
 npx clawhub@latest install veo3-video-gen
@@ -1085,7 +1085,7 @@ npx clawhub@latest install veo3-video-gen
 • 生成和拼接短视频
 • 支持多种风格
 ```text
-**4. tube-cog - YouTube内内容创作**
+~~**4. tube-cog - YouTube内内容创作**~~
 ```bash
 # 安装
 npx clawhub@latest install tube-cog
@@ -1095,7 +1095,7 @@ npx clawhub@latest install tube-cog
 • 由CellCog提供支持
 • 完整视频制作流程
 ```text
-**5. video-cog - 长篇视频制作**
+~~**5. video-cog - 长篇视频制作**~~
 ```bash
 # 安装
 npx clawhub@latest install video-cog
@@ -1105,7 +1105,7 @@ npx clawhub@latest install video-cog
 • 多智能体协作
 • 专业级视频输出
 ```text
-**6. youtube-title-generator - 标题生成**
+~~**6. youtube-title-generator - 标题生成**~~
 ```bash
 # 安装
 npx clawhub@latest install youtube-title-generator
@@ -1115,7 +1115,7 @@ npx clawhub@latest install youtube-title-generator
 • 基于内内容分析
 • 提高点击率
 ```text
-### 14.2.6 配置方法
+### ~~14.2.6 配置方法~~
 
 ```bash
 # 1. 配置脚本生成
@@ -1130,14 +1130,14 @@ openclaw config set script.add-hooks true
 openclaw config set script.batch-mode true
 openclaw config set script.series-planning true
 ```text
-### 14.2.6 效率提升数据
+### ~~14.2.6 效率提升数据~~
 
-| 任务类型 | 使用前 | 使用后 | 节省时间 | 提升比例 |
+|~~ 任务类型 ~~|~~ 使用前 ~~|~~ 使用后 ~~|~~ 节省时间 ~~|~~ 提升比例 ~~|
 |---------|--------|--------|----------|----------|
-| 短视频脚本 | 60分钟 | 5分钟 | 55分钟 | 91.7% |
-| 长视频脚本 | 180分钟 | 15分钟 | 165分钟 | 91.7% |
-| 系列规划 | 300分钟 | 20分钟 | 280分钟 | 93.3% |
-| **平均** | **540分钟** | **40分钟** | **500分钟** | **92.6%** |
+|~~ 短视频脚本 ~~|~~ 60分钟 ~~|~~ 5分钟 ~~|~~ 55分钟 ~~|~~ 91.7% ~~|
+|~~ 长视频脚本 ~~|~~ 180分钟 ~~|~~ 15分钟 ~~|~~ 165分钟 ~~|~~ 91.7% ~~|
+|~~ 系列规划 ~~|~~ 300分钟 ~~|~~ 20分钟 ~~|~~ 280分钟 ~~|~~ 93.3% ~~|
+|~~ **平均** ~~|~~ **540分钟** ~~|~~ **40分钟** ~~|~~ **500分钟** ~~|~~ **92.6%** ~~|
 
 ---
 
@@ -1441,31 +1441,31 @@ openclaw config set translate.keep-links true
 
 ---
 
-## 14.4 数据分析自动化
+## ~~14.4 数据分析自动化~~
 
-### 14.4.1 场景描述
+### ~~14.4.1 场景描述~~
 
-**用户**：数据分析师、运营人员、管理者
-**需求**：数据清洗、可视化、报告生成
-**工具**：Excel、Python、Tableau
+~~**用户**：数据分析师、运营人员、管理者~~
+~~**需求**：数据清洗、可视化、报告生成~~
+~~**工具**：Excel、Python、Tableau~~
 
-**痛点**：
+~~**痛点**：~~
 ```
 ❌ 数据清洗耗时：手动处理要几小时
 ❌ 图表制作繁琐：一个一个调整
 ❌ 报告撰写累：每周都要写
 ❌ 重复劳动多：每次都是相同流程
 ```text
-**目标**：
+~~**目标**：~~
 ```
 ✅ 自动清洗数据
 ✅ 快速生成图表
 ✅ 自动生成报告
 ✅ 一键完成分析
 ```text
-### 14.4.2 数据清洗
+### ~~14.4.2 数据清洗~~
 
-**场景：清洗销售数据**
+~~**场景：清洗销售数据**~~
 
 ```
 你：帮我清洗这份销售数据，去除重复和异常值
@@ -1526,9 +1526,9 @@ OpenClaw：好的，正在分析数据...
 • 使用后：98%
 • 提升：+13%
 ```text
-### 14.4.3 数据可视化
+### ~~14.4.3 数据可视化~~
 
-**场景：生成销售分析图表**
+~~**场景：生成销售分析图表**~~
 
 ```
 你：帮我分析这份销售数据，生成可视化图表
@@ -1595,9 +1595,9 @@ OpenClaw：好的，正在分析...
 • 优化产品结构
 • 建立客户分级管理体系
 ```text
-### 14.4.4 自动生成报告
+### ~~14.4.4 自动生成报告~~
 
-**场景：生成周报**
+~~**场景：生成周报**~~
 
 ```
 你：帮我生成本周的销售周报
@@ -2162,32 +2162,32 @@ openclaw config set brainstorm.sync-to "notion,feishu"
 
 **1. 创意赋能**
 ```
-✅ 降低创作门槛
-✅ 提升创作效率
-✅ 激发布创意灵感
-✅ 批量生产内内容
+~~✅ 降低创作门槛~~
+~~✅ 提升创作效率~~
+~~✅ 激发布创意灵感~~
+~~✅ 批量生产内内容~~
 ```text
 **2. 多场景适用**
 ```
-✅ 内内容创作
-✅ 视频制作
-✅ 跨国协作
-✅ 数据分析
-✅ 战略决策
+~~✅ 内内容创作~~
+~~✅ 视频制作~~
+~~✅ 跨国协作~~
+~~✅ 数据分析~~
+~~✅ 战略决策~~
 ```text
 **3. 智能化处理**
 ```
-✅ AI优化提示词
-✅ 自动格式保留
-✅ 智能质量检查
-✅ 批量自动处理
+~~✅ AI优化提示词~~
+~~✅ 自动格式保留~~
+~~✅ 智能质量检查~~
+~~✅ 批量自动处理~~
 ```text
 **4. 成本效益显著**
 ```
-✅ 节省人力成本
-✅ 提升产出质量
-✅ 缩短制作周期
-✅ 降低试错成本
+~~✅ 节省人力成本~~
+~~✅ 提升产出质量~~
+~~✅ 缩短制作周期~~
+~~✅ 降低试错成本~~
 ```text
 ### 成功关键
 
@@ -2402,9 +2402,9 @@ Logo设计方向：
 
 ---
 
-## 📦 本章节Skills完整安装指南
+## ~~📦 本章节Skills完整安装指南~~
 
-### 一键安装所有创意Skills
+### ~~一键安装所有创意Skills~~
 
 ```bash
 # AI绘画工作流 Skills
@@ -2440,66 +2440,66 @@ npx clawhub@latest install excel
 
 # 多Agent头脑风暴（内置功能，无需安装）
 ```text
-### 分场景安装建议
+### ~~分场景安装建议~~
 
-**场景1：内内容创作者**
+~~**场景1：内内容创作者**~~
 ```bash
 npx clawhub@latest install fal-ai
 npx clawhub@latest install video-agent
 npx clawhub@latest install translator
 ```text
-**场景2：视频UP主**
+~~**场景2：视频UP主**~~
 ```bash
 npx clawhub@latest install video-agent
 npx clawhub@latest install tube-cog
 npx clawhub@latest install youtube-title-generator
 ```text
-**场景3：跨国团队**
+~~**场景3：跨国团队**~~
 ```bash
 npx clawhub@latest install translator
 npx clawhub@latest install straker-verify
 npx clawhub@latest install language-learning
 ```text
-**场景4：数据分析师**
+~~**场景4：数据分析师**~~
 ```bash
 npx clawhub@latest install data-analyst
 npx clawhub@latest install csv-pipeline
 npx clawhub@latest install excel
 npx clawhub@latest install google-analytics-api
 ```text
-**场景5：创业者/管理者**
+~~**场景5：创业者/管理者**~~
 ```bash
 npx clawhub@latest install fal-ai
 npx clawhub@latest install video-agent
 npx clawhub@latest install translator
 npx clawhub@latest install data-analyst
 ```text
-### 配置优先级
+### ~~配置优先级~~
 
-**必装Skills（优先级：⭐⭐⭐⭐⭐）**
-- translator - 翻译助手
-- data-analyst - 数据分析
-- fal-ai - AI绘画
+~~**必装Skills（优先级：⭐⭐⭐⭐⭐）**~~
+- ~~translator - 翻译助手~~
+- ~~data-analyst - 数据分析~~
+- ~~fal-ai - AI绘画~~
 
-**推荐Skills（优先级：⭐⭐⭐⭐）**
-- video-agent - 视频生成
-- excel - Excel处理
-- csv-pipeline - CSV处理
+~~**推荐Skills（优先级：⭐⭐⭐⭐）**~~
+- ~~video-agent - 视频生成~~
+- ~~excel - Excel处理~~
+- ~~csv-pipeline - CSV处理~~
 
-**可选Skills（优先级：⭐⭐⭐）**
-- 根据具体需求选择安装
+~~**可选Skills（优先级：⭐⭐⭐）**~~
+- ~~根据具体需求选择安装~~
 
-### 成本预算参考
+### ~~成本预算参考~~
 
-**月度成本估算**：
+~~**月度成本估算**：~~
 
-| 使用场景 | Skills组合 | API成本 | 总成本 |
+|~~ 使用场景 ~~|~~ Skills组合 ~~|~~ API成本 ~~|~~ 总成本 ~~|
 |---------|-----------|---------|--------|
-| 轻度使用 | 基础3个 | $5-10 | $5-10 |
-| 中度使用 | 推荐6个 | $20-50 | $20-50 |
-| 重度使用 | 全部安装 | $50-100 | $50-100 |
+|~~ 轻度使用 ~~|~~ 基础3个 ~~|~~ $5-10 ~~|~~ $5-10 ~~|
+|~~ 中度使用 ~~|~~ 推荐6个 ~~|~~ $20-50 ~~|~~ $20-50 ~~|
+|~~ 重度使用 ~~|~~ 全部安装 ~~|~~ $50-100 ~~|~~ $50-100 ~~|
 
-**成本优化建议**：
+~~**成本优化建议**：~~
 ```
 ✅ 使用国产模型（DeepSeek、Kimi）
 ✅ 批量处理任务
@@ -2507,9 +2507,9 @@ npx clawhub@latest install data-analyst
 ✅ 设置Token限制
 ✅ 选择合适的分辨率/质量
 ```text
-### 常见访问题
+### ~~常见访问题~~
 
-**Q1：Skills 安装失败怎么怎么办？**
+~~**Q1：Skills 安装失败怎么怎么办？**~~
 ```bash
 # 检查网络连接
 ping github.com
@@ -2520,7 +2520,7 @@ npm config set registry https://registry.npmmirror.com
 # 重试安装
 npx clawhub@latest install <skill-name>
 ```text
-**Q2：Skills加载失败怎么怎么办？**
+~~**Q2：Skills加载失败怎么怎么办？**~~
 ```bash
 # 查看Skills列表
 openclaw skills list
@@ -2531,7 +2531,7 @@ openclaw skills check
 # 重启OpenClaw
 openclaw restart
 ```text
-**Q3：API调用失败怎么怎么办？**
+~~**Q3：API调用失败怎么怎么办？**~~
 ```bash
 # 检查API配置
 openclaw config get api
@@ -2540,9 +2540,9 @@ openclaw config get api
 openclaw api test
 
 # 查看错误日志
-openclaw logs --tail 50
+openclaw logs --limit 50
 ```text
-**Q4：如何更新Skills？**
+~~**Q4：如何更新Skills？**~~
 ```bash
 # 更新单个Skill
 npx clawhub@latest update <skill-name>
@@ -2553,16 +2553,16 @@ npx clawhub@latest update --all
 # 查看可更新的Skills
 npx clawhub@latest list --outdated
 ```text
-### 最佳实践
+### ~~最佳实践~~
 
-**1. 渐进式安装**
+~~**1. 渐进式安装**~~
 ```
 第1周：安装基础Skills，熟悉使用
 第2周：根据需求添加专业Skills
 第3周：优化配置，提升效率
 第4周：建立自动化工作流
 ```text
-**2. 定期维护**
+~~**2. 定期维护**~~
 ```bash
 # 每周检查更新
 npx clawhub@latest list --outdated
@@ -2573,7 +2573,7 @@ openclaw skills check
 # 每季度备份配置
 openclaw backup create
 ```text
-**3. 性能优化**
+~~**3. 性能优化**~~
 ```bash
 # 只加载需要的Skills
 openclaw config set skills.lazy-load true
@@ -2584,10 +2584,10 @@ openclaw config set skills.max-concurrent 3
 # 启用缓存
 openclaw config set skills.cache.enabled true
 ```text
-### 进阶技巧
+### ~~进阶技巧~~
 
-**技巧1：创建Skills组合**
-**技巧1：使用配置文件管理Skills**
+~~**技巧1：创建Skills组合**~~
+~~**技巧1：使用配置文件管理Skills**~~
 ```bash
 # 创建内内容创作配置
 cat > ~/.openclaw/profiles/content-creation.json <<EOF
@@ -2598,14 +2598,14 @@ cat > ~/.openclaw/profiles/content-creation.json <<EOF
 EOF
 ```
 
-**技巧2：自定义快捷命令**
+~~**技巧2：自定义快捷命令**~~
 ```bash
 # 创建快捷命令
 openclaw alias create "画图" "使用fal-ai生成图片"
 openclaw alias create "翻译" "使用translator翻译"
 openclaw alias create "分析" "使用data-analyst分析数据"
 ```text
-**技巧3：批量操作**
+~~**技巧3：批量操作**~~
 ```bash
 # 批量生成图片
 openclaw batch run "fal-ai" \
@@ -2625,16 +2625,16 @@ openclaw batch run "translator" \
 
 ---
 
-## 🌐 在线阅读
+## ~~🌐 在线阅读~~
 
-📖 **想在线阅读此章节节？**
+~~📖 **想在线阅读此章节节？**~~
 
-[🔗 在线阅读此章节节](https://awesome.tryopenclaw.asia/docs/04-practical-cases/14-creative-applications/)
+~~[🔗 在线阅读此章节节](https://awesome.tryopenclaw.asia/docs/04-practical-cases/14-creative-applications/)~~
 
-访问网站获取更好的阅读体验：
-- 📱 响应式设计，支持手机、平板、电脑
--  支持黑暗模式，保护眼睛
-- 🔍 内置搜索功能，快速定位内内容
-- 📋 目附录导航，轻松跳转章节节
+~~访问网站获取更好的阅读体验：~~
+- ~~📱 响应式设计，支持手机、平板、电脑~~
+-  ~~支持黑暗模式，保护眼睛~~
+- ~~🔍 内置搜索功能，快速定位内内容~~
+- ~~📋 目附录导航，轻松跳转章节节~~
 
-[🏠 访问完整教网站](https://awesome.tryopenclaw.asia)
+~~[🏠 访问完整教网站](https://awesome.tryopenclaw.asia)~~
