@@ -333,6 +333,8 @@ openclaw --version  # 确认版本为 2026.3.24
 
 本项目采用 [GPL-3.0 License](LICENSE)
 
+
+![star](https://atomgit.com/xianyu120/awesome-openclaw-tutorial/star/badge.svg)
 ### ⚠️ 重要声明：禁止倒卖
 
 - ❌ **严禁倒卖**：禁止将本教程打包后进行商业售卖
